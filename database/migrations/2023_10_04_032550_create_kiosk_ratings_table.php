@@ -21,6 +21,9 @@ return new class extends Migration
             $table->integer('perRating')->index();
             $table->integer('ovrRating')->index();
             $table->longText('content')->nullable();
+            $table->string('name')->nullable();
+            $table->string('number')->nullable();
+            $table->string('email')->nullable();
             $table->tinyInteger('isActive')->default(true);
             $table->timestamps();
 

@@ -74,6 +74,11 @@ class PreferenceAccountController extends Controller
             $preference->avatar = $request->get('avatar');
             $preference->save();
 
+            $role = new UserRole;
+            $role->userID = $preference->id;
+            $role->roleID = $request->get('roleID');
+            $role->save();
+
             return response()->json([
                 'msg' => 'RECORD STORED!',
                 'data' => $preference
@@ -105,13 +110,6 @@ class PreferenceAccountController extends Controller
             $admin->employeeID = $request->get('employeeID');
             $admin->isVerified = TRUE;
             $admin->save();
-
-            $role = new UserRole;
-            $role->userID = $id;
-            $role->roleID = $request->get('roleID');
-            $role->save();
-
-
 
             $account = User::select('users.name', 'users.email', 'user_admins.employeeID', 'preference_offices.label AS office', 'preference_roles.label AS role', 'preference_positions.label AS position')
                 ->join('user_admins', 'users.id', 'user_admins.userID')

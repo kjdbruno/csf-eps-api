@@ -16,6 +16,7 @@ use App\Http\Requests\DiscussionPollRequest;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class DiscussionController extends Controller
 {
@@ -601,5 +602,69 @@ class DiscussionController extends Controller
             ], 400);
 
         }
+    }
+
+    /**
+     * 
+     */
+    public function getReport($id)
+    {
+        try {
+
+            $discussions = Discussion::select('discussions.*', 'preference_categories.label AS category')
+                ->join('preference_categories', 'discussions.categoryID', 'preference_categories.id')
+                ->where('discussions.id', $id)
+                ->get();
+
+            $threads = Discussionthread::select('discussion_threads.*', 'users.name', 'users.email', 'users.avatar', 'preference_offices.label AS office')
+                ->join('users', 'discussion_threads.userID', 'users.id')
+                ->leftJoin('user_admins', 'users.id', 'user_admins.userID')
+                ->leftJoin('user_clients', 'users.id', 'user_clients.userID')
+                ->leftJoin('preference_offices', 'user_admins.officeID', 'preference_offices.id')
+                ->where('discussion_threads.discussionID', $id)
+                ->orderBy('discussion_threads.created_at', 'DESC')
+                ->get();
+
+            $answers = DiscussionPoll::where('isActive', TRUE)
+                ->where('discussionID', $id)
+                ->get();
+
+                $arr = [];
+
+                foreach ($answers as $key => $a_value) {
+                    
+                    $count = DiscussionAnswer::where('answerID', $a_value->id)
+                        ->count();
+
+                        $array = [
+                            'label' => $a_value->label,
+                            'count' => $count
+                        ];
+
+                        array_push($arr, $array);
+
+                }
+
+            $today = Carbon::now(+8);
+            $now = $today->toDayDateTimeString(); 
+
+            $pdf = PDF::loadView('report.DiscussionDetailReport', [
+                'discussions' => $discussions,
+                'threads' => $threads,
+                'poll' => $arr,
+                'now' => $now
+            ])->setPaper('a4', 'portrait');
+
+            return $pdf->stream();
+
+        } catch (\Exception $e) {
+
+            logger('Message logged from DiscussionController.report', [$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong reporting record',
+                'msg' => $e->getMessage()
+            ], 400);
+
+        } 
     }
 }

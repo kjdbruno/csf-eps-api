@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/endpoint/getOffice', [\App\Http\Controllers\PreferenceController::class, 'getOfficeEndpoint']); // get office
+Route::get('/endpoint/getPersonnel/{id}', [\App\Http\Controllers\PreferenceController::class, 'getPersonnelEndpoint']); // get personnel
+Route::post('/endpoint/kiosk', [\App\Http\Controllers\FeedbackController::class, 'kioskEndpoint']); // create feedback entry
+
 Route::middleware(['auth:sanctum'])->group(function () {
     // return $request->user();
     Route::get('/auth/user', [\App\Http\Controllers\Auth\AuthController::class, 'getUser']);
@@ -44,6 +48,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /**
      * 
      */
+    Route::get('/overview/{id}', [\App\Http\Controllers\PreferenceController::class, 'getOverview']); // get overview
+    //
     Route::get('/getYear', [\App\Http\Controllers\PreferenceController::class, 'getYear']); // get year
     Route::get('/getSex', [\App\Http\Controllers\PreferenceController::class, 'getSex']); // get sex
     Route::get('/getRole', [\App\Http\Controllers\PreferenceController::class, 'getRole']); // get role
@@ -117,6 +123,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/kiosk/{id}', [\App\Http\Controllers\PreferenceKioskController::class, 'update']); // modify kiosk
     Route::post('/kiosk/disable/{id}', [\App\Http\Controllers\PreferenceKioskController::class, 'disable']); // disable kiosk
     Route::post('/kiosk/enable/{id}', [\App\Http\Controllers\PreferenceKioskController::class, 'enable']); // enable kiosk
+    Route::get('/kiosk/detail/{id}', [\App\Http\Controllers\PreferenceKioskController::class, 'getKiosk']); // get kiosk detail
+    Route::get('/kiosk/report/{id}', [\App\Http\Controllers\PreferenceKioskController::class, 'getReport']); // get kiosk report
     /**
      * DISCUSSION
      */
@@ -135,4 +143,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/discussion/answer', [\App\Http\Controllers\DiscussionController::class, 'answer']); // store answer
     Route::post('/discussion/answer/disable/{id}', [\App\Http\Controllers\DiscussionController::class, 'disableAnswer']); // disable answer
     Route::post('/discussion/answer/enable/{id}', [\App\Http\Controllers\DiscussionController::class, 'enableAnswer']); // enable answer
+    Route::get('/discussion/report/{id}', [\App\Http\Controllers\DiscussionController::class, 'getReport']); // get report
+    /**
+     * 
+     */
+    Route::get('/report/summary', [\App\Http\Controllers\ReportController::class, 'getSummary']); // summary
+    Route::get('/report/performance', [\App\Http\Controllers\ReportController::class, 'getPerformance']); // performance
+    //
+    Route::get('/report/feedback/summary', [\App\Http\Controllers\ReportController::class, 'getFeedbackSummary']); // feedback summary
+    Route::get('/report/feedback/category', [\App\Http\Controllers\ReportController::class, 'getFeedbackCategory']); // feedback category
+    Route::get('/report/feedback/status', [\App\Http\Controllers\ReportController::class, 'getFeedbackStatus']); // feedback status
+    Route::get('/report/feedback/office', [\App\Http\Controllers\ReportController::class, 'getFeedbackOffice']); // feedback office
+    Route::get('/report/feedback/kiosk', [\App\Http\Controllers\ReportController::class, 'getFeedbackKiosk']); // feedback kiosk
+    //
+    Route::get('/report/discussion/summary', [\App\Http\Controllers\ReportController::class, 'getDiscussionSummary']); // discussion summary
 });

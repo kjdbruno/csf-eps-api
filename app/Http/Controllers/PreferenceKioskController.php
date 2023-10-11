@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\PreferenceKioskRequest;
 
+use PDF;
+use Carbon\Carbon;
+
 class PreferenceKioskController extends Controller
 {
     /**
@@ -98,6 +101,7 @@ class PreferenceKioskController extends Controller
                         'officeID' => $k_value->officeID,
                         'positionID' => $k_value->positionID,
                         'description' => $k_value->description,
+                        'photo' => $k_value->photo,
                         'isActive' => $k_value->isActive,
                         //
                         'office' => $k_value->office,
@@ -141,6 +145,7 @@ class PreferenceKioskController extends Controller
             $preference->officeID = $request->get('officeID');
             $preference->positionID = $request->get('positionID');
             $preference->description = $request->get('description');
+            $preference->photo = $request->get('photo');
             $preference->save();
 
             return response()->json([
@@ -175,6 +180,7 @@ class PreferenceKioskController extends Controller
             $preference->officeID = $request->get('officeID');
             $preference->positionID = $request->get('positionID');
             $preference->description = $request->get('description');
+            $preference->photo = $request->get('photo');
             $preference->save();
 
             return response()->json([
@@ -245,5 +251,135 @@ class PreferenceKioskController extends Controller
             ], 400);
 
         }
+    }
+
+    /**
+     * 
+     */
+    public function getKiosk($id)
+    {
+        try {
+
+            $kiosks = PreferenceKiosk::select('preference_kiosks.*', 'preference_offices.label AS office', 'preference_positions.label AS position')
+                ->join('preference_offices', 'preference_kiosks.officeID', 'preference_offices.id')
+                ->join('preference_positions', 'preference_kiosks.positionID', 'preference_positions.id')
+                ->where('preference_kiosks.id', $id)
+                ->get();
+
+            $ks_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                ->where('kiosk_ratings.kioskID', $id)
+                ->whereNot('kiosk_ratings.phyRating', 0)
+                ->sum('kiosk_ratings.phyRating');
+            $ks_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                ->where('kiosk_ratings.kioskID', $id)
+                ->whereNot('kiosk_ratings.serRating', 0)
+                ->sum('kiosk_ratings.serRating');
+            $ks_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                ->where('kiosk_ratings.kioskID', $id)
+                ->whereNot('kiosk_ratings.perRating', 0)
+                ->sum('kiosk_ratings.perRating');
+            $ks_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                ->where('kiosk_ratings.kioskID', $id)
+                ->whereNot('kiosk_ratings.ovrRating', 0)
+                ->sum('kiosk_ratings.ovrRating');
+
+            $kc_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                ->where('kiosk_ratings.kioskID', $id)
+                ->whereNot('kiosk_ratings.phyRating', 0)
+                ->count();
+            $kc_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                ->where('kiosk_ratings.kioskID', $id)
+                ->whereNot('kiosk_ratings.serRating', 0)
+                ->count();
+            $kc_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                ->where('kiosk_ratings.kioskID', $id)
+                ->whereNot('kiosk_ratings.perRating', 0)
+                ->count();
+            $kc_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                ->where('kiosk_ratings.kioskID', $id)
+                ->whereNot('kiosk_ratings.ovrRating', 0)
+                ->count();
+
+            $km_phy = (3 * $kc_phy);
+            $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
+
+            $km_ser = (3 * $kc_ser);
+            $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
+
+            $km_per = (3 * $kc_per);
+            $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
+
+            $km_ovr = (3 * $kc_ovr);
+            $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
+
+            $arr = [];
+
+            $rating = [
+                'phyRating' => number_format($kr_phy, 2),
+                'serRating' => number_format($kr_ser, 2),
+                'perRating' => number_format($kr_per, 2),
+                'ovrRating' => number_format($kr_ovr, 2)
+            ];
+
+            array_push($arr, $rating);
+
+            $list = KioskRating::where('kioskID', $id)
+                ->orderBy('created_at', 'DESC')
+                ->get();
+
+                return response()->json([
+                    'detail' => $kiosks,
+                    'rating' => $arr,
+                    'list' => $list
+                ]);
+
+        } catch (\Exception $e) {
+
+            logger('Message logged from FeedbackController.getKiosk', [$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong getting record!',
+                'data' => $e->getMessage()
+            ], 400);
+
+        } 
+    }
+
+    /**
+     * 
+     */
+    public function getReport($id)
+    {
+        try {
+
+            $kiosks = PreferenceKiosk::select('preference_kiosks.*', 'preference_offices.label AS office', 'preference_positions.label AS position')
+                ->leftJoin('preference_offices', 'preference_kiosks.officeID', 'preference_offices.id')
+                ->leftJoin('preference_positions', 'preference_kiosks.positionID', 'preference_positions.id')
+                ->where('preference_kiosks.id', $id)
+                ->get();
+
+            $list = KioskRating::where('id', $id)
+                ->orderBy('created_at', 'DESC')
+                ->get();
+                
+            $today = Carbon::now(+8);
+            $now = $today->toDayDateTimeString(); 
+
+            $pdf = PDF::loadView('report.KioskDetailReport', [
+                'kiosks' => $kiosks,
+                'list' => $list,
+                'now' => $now
+            ])->setPaper('a4', 'portrait');
+
+            return $pdf->stream();
+
+        } catch (\Exception $e) {
+
+            logger('Message logged from FeedbackController.getReport', [$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong reporting record!',
+                'data' => $e->getMessage()
+            ], 400);
+
+        }  
     }
 }

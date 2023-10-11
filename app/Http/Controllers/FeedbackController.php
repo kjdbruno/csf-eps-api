@@ -109,6 +109,68 @@ class FeedbackController extends Controller
 
                 } else {
 
+                    $rating_sum = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
+                        ->join('feedback_offices', 'feedback_responses.feedbackID', 'feedback_offices.feedbackID')
+                        ->join('feedback', 'feedback_offices.feedbackID', 'feedback.id')
+                        ->whereNot('feedback_ratings.rating', 0)
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->sum('feedback_ratings.rating');
+
+                    $rating_count = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
+                        ->join('feedback_offices', 'feedback_responses.feedbackID', 'feedback_offices.feedbackID')
+                        ->join('feedback', 'feedback_offices.feedbackID', 'feedback.id')
+                        ->whereNot('feedback_ratings.rating', 0)
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->count();
+
+                    $maximum = (3 * $rating_count);
+                    $satisfaction = ((($rating_sum == 0 && $rating_count == 0) ? 0 : ($rating_sum / $maximum)) * 100);
+
+                    $total = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->count();
+
+                    $pending = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->where('feedback.status', 1)
+                        ->count();
+
+                    $ongoing = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->where('feedback.status', 2)
+                        ->count();
+
+                    $completed = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->where('feedback.status', 3)
+                        ->count();
+
+                    $delayed = FeedbackOffice::whereYear('created_at', $users[0]->year)
+                        ->where('officeID', $users[0]->officeID)
+                        ->where('isDelayed', TRUE)
+                        ->count();
+
+                    $cancelled = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback.isActive', FALSE)
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->count();
+
+                        return response()->json([
+                            'totalFeedback' => $total,
+                            'totalPending' => $pending,
+                            'totalOngoing' => $ongoing,
+                            'totalCompleted' => $completed,
+                            'totalDelayed' => $delayed,
+                            'totalCancelled' => $cancelled,
+                            'satisfactionRate' => number_format($satisfaction, 2)
+                        ]);
                 }
 
         } catch (\Exception $e) {
@@ -649,6 +711,9 @@ class FeedbackController extends Controller
         try {
 
             $kiosk = new KioskRating;
+            $kiosk->name = $request->get('name');
+            $kiosk->number = $request->get('number');
+            $kiosk->email = $request->get('email');
             $kiosk->kioskID = $request->get('personnelID');
             $kiosk->phyRating = $request->get('phyRating');
             $kiosk->serRating = $request->get('serRating');
@@ -682,7 +747,66 @@ class FeedbackController extends Controller
             $rating->save();
 
             return response()->json([
-                'msg' => 'RATING SAVED',
+                'msg' => 'RATING SAVED!',
+                'data' => $kiosk
+            ], 200);
+
+        } catch (\Exception $e) {
+
+            logger('Message logged from FeedbackController.kiosk', [$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong storing record!',
+                'data' => $e->getMessage()
+            ], 400);
+
+        }
+    }
+
+    /**
+     * 
+     */
+    public function kioskEndpoint(FeedbackEntryKioskRequest $request)
+    {
+        try {
+
+            $kiosk = new KioskRating;
+            $kiosk->name = $request->get('name');
+            $kiosk->number = $request->get('number');
+            $kiosk->email = $request->get('email');
+            $kiosk->kioskID = $request->get('personnelID');
+            $kiosk->phyRating = $request->get('phyRating');
+            $kiosk->serRating = $request->get('serRating');
+            $kiosk->perRating = $request->get('perRating');
+            $kiosk->ovrRating = $request->get('ovrRating');
+            $kiosk->content = $request->get('suggestion');
+            $kiosk->save();
+            
+            $divisor = 0;
+            if ($request->get('phyRating') != 0) {
+                $phys = $divisor + 1;
+                $divisor = $phys;
+            }
+            if ($request->get('serRating') != 0) {
+                $sers = $divisor + 1;
+                $divisor = $sers;
+            }
+            if ($request->get('perRating') != 0) {
+                $pers = $divisor + 1;
+                $divisor = $pers;
+            }
+            if ($request->get('ovrRating') != 0) {
+                $ovrs = $divisor + 1;
+                $divisor = $ovrs;
+            }
+            $rate = ($divisor == 0 ? 0 : (($request->get('phyRating') + $request->get('serRating') + $request->get('perRating') + $request->get('ovrRating')) / $divisor));
+
+            $rating = new Rating;
+            $rating->officeID = $request->get('officeID');
+            $rating->rating = $rate;
+            $rating->save();
+
+            return response()->json([
+                'msg' => 'RATING SAVED!',
                 'data' => $kiosk
             ], 200);
 

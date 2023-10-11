@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->foreign('userID')->references('id')->on('users');
             $table->foreign('discussionID')->references('id')->on('discussions');
-            $table->foreign('answerID')->references('id')->on('discussion_poll_answers');
+            $table->foreign('answerID')->references('id')->on('discussion_polls');
         });
     }
 

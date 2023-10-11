@@ -14,6 +14,9 @@ class FeedbackEntryKioskRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'sometimes',
+            'number' => 'sometimes',
+            'email' => 'sometimes',
             'officeID' => 'required|integer',
             'personnelID' => 'required|integer',
             'phyRating' => 'required',

@@ -15,7 +15,6 @@ class PreferenceAccountVerifyRequest extends FormRequest
     {
         return [
             'employeeID' => 'required|integer',
-            'roleID' => 'required|integer',
             'officeID' => 'required|integer',
             'positionID' => 'required|integer',
             'yearID' => 'required|integer'

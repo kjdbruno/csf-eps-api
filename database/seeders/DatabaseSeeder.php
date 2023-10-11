@@ -31,7 +31,8 @@ class DatabaseSeeder extends Seeder
             UserAdminSeeder::class,
             UserRoleSeeder::class,
 
-            PreferenceCategorySeeder::class
+            PreferenceCategorySeeder::class,
+            MonthSeeder::class
         ]);
     }
 }

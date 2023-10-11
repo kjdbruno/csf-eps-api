@@ -17,7 +17,8 @@ class PreferenceKioskRequest extends FormRequest
             'name' => 'required|string|max:255',
             'officeID' => 'required|integer',
             'positionID' => 'required|integer',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'photo' => 'required|string'
         ];
     }
 }

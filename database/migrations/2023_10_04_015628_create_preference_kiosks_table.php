@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('officeID')->index();
             $table->unsignedBigInteger('positionID')->index();
             $table->longText('description');
+            $table->longText('photo');
             $table->tinyInteger('isActive')->default(true);
             $table->timestamps();
 

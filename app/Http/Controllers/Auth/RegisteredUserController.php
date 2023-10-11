@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
             $client->verification = $code;
             $client->save();
 
-            event(new Registered($user));
+            // event(new Registered($user));
 
             Auth::login($user);
 
