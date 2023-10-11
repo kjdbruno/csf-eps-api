@@ -15,8 +15,8 @@ class FeedbackResponseRequest extends FormRequest
     {
         return [
             'feedbackID' => 'required|integer',
-            'content' => 'sometimes|string',
-            'file' => 'sometimes|string'
+            'content' => 'sometimes',
+            'file' => 'sometimes'
         ];
     }
 }

@@ -114,6 +114,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/feedback/response/{id}', [\App\Http\Controllers\FeedbackController::class, 'response']); // create feedback response
     Route::put('/feedback/complete/{id}', [\App\Http\Controllers\FeedbackController::class, 'complete']); // create feedback complete
     Route::put('/feedback/cancel/{id}', [\App\Http\Controllers\FeedbackController::class, 'cancel']); // create feedback cancel
+    Route::get('/feedback/report/{id}', [\App\Http\Controllers\FeedbackController::class, 'getReport']); // get feedback report
     //
     Route::post('/feedback/entry/offline', [\App\Http\Controllers\FeedbackController::class, 'offline']); // create feedback entry
     Route::post('/feedback/entry/kiosk', [\App\Http\Controllers\FeedbackController::class, 'kiosk']); // create feedback entry

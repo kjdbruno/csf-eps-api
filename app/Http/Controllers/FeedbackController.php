@@ -30,6 +30,7 @@ use App\Mail\FeedbackOfficeMail;
 use Illuminate\Support\Facades\Mail;
 
 use Carbon\Carbon;
+use PDF;
 
 class FeedbackController extends Controller
 {
@@ -52,9 +53,11 @@ class FeedbackController extends Controller
 
                 foreach ($feedbacks as $key => $f_value) {
                     
-                    $offices = FeedbackOffice::where('feedbackID', $f_value->id)
-                        ->where('isReceived', FALSE)
-                        ->where('isActive', TRUE)
+                    $offices = FeedbackOffice::join('feedback', 'feedback_offices.feedbackID', 'feedback.id')
+                        ->where('feedback_offices.feedbackID', $f_value->id)
+                        ->where('feedback_offices.isReceived', FALSE)
+                        ->where('feedback_offices.isActive', TRUE)
+                        ->where('feedback.isActive', TRUE)
                         ->update([
                             'isDelayed' => TRUE
                         ]);
@@ -701,6 +704,76 @@ class FeedbackController extends Controller
             ], 400);
 
         }
+    }
+
+    /**
+     * 
+     */
+    public function getReport($id)
+    {
+        try {
+
+            $feedbacks = Feedback::select('feedback.*', 'users.name', 'users.email', 'users.avatar', 'preference_categories.label AS category')
+                ->join('users', 'feedback.userID', 'users.id')
+                ->join('user_clients', 'users.id', 'user_clients.userID')
+                ->join('preference_categories', 'feedback.categoryID', 'preference_categories.id')
+                ->where('feedback.id', $id)
+                ->get();
+
+            $rating_sum = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
+                ->whereNot('feedback_ratings.rating', 0)
+                ->where('feedback_responses.feedbackID', $id)
+                ->sum('feedback_ratings.rating');
+
+            $rating_count = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
+                ->whereNot('feedback_ratings.rating', 0)
+                ->where('feedback_responses.feedbackID', $id)
+                ->count();
+
+            $maximum = (3 * $rating_count);
+            $rating = ((($rating_sum == 0 && $rating_count == 0) ? 0 : ($rating_sum / $maximum)) * 100);
+
+            $offices = FeedbackOffice::select('preference_offices.code AS office', 'feedback_offices.isReceived', 'feedback_offices.isDelayed')
+                    ->join('preference_offices', 'feedback_offices.officeID', 'preference_offices.id')
+                    ->where('feedback_offices.feedbackID', $id)
+                    ->get();
+
+            $evidences = FeedbackEvidence::where('feedbackID', $id)
+                ->get();
+
+            $responses = FeedbackResponse::select('feedback_responses.*', 'users.name', 'users.avatar', 'user_roles.roleID', 'preference_offices.label AS office')
+                ->join('users', 'feedback_responses.userID', 'users.id')
+                ->join('user_roles', 'users.id', 'user_roles.userID')
+                ->leftJoin('user_admins', 'users.id', 'user_admins.userID')
+                ->leftJoin('preference_offices', 'user_admins.officeID', 'preference_offices.id')
+                ->where('feedback_responses.feedbackID', $id)
+                ->orderBy('feedback_responses.created_at', 'DESC')
+                ->get();
+            
+            $today = Carbon::now(+8);
+            $now = $today->toDayDateTimeString(); 
+
+            $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true])->loadView('report.FeedbackDetailReport', [
+                'feedbacks' => $feedbacks,
+                'evidences' => $evidences,
+                'rating' => number_format($rating, 2),
+                'responses' => $responses,
+                'now' => $now
+            ])->setPaper('a4', 'portrait');
+
+            return $pdf->stream();
+
+            return response()->json($arr);
+
+        } catch (\Exception $e) {
+
+            logger('Message logged from FeedbackController.getReport', [$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong getting record!',
+                'data' => $e->getMessage()
+            ], 400);
+
+        } 
     }
 
     /**
