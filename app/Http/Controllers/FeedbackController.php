@@ -50,7 +50,10 @@ class FeedbackController extends Controller
                 ->where('users.id', $id)
                 ->get();
 
-            $feedbacks = Feedback::where('expire_on', '<=', NOW())
+            $now = NOW();
+            $today = date_format($now, 'Y-m-d h:i:s');
+
+            $feedbacks = Feedback::where('expire_on', '<=', $today)
                 ->get();
 
                 foreach ($feedbacks as $key => $f_value) {
@@ -110,6 +113,7 @@ class FeedbackController extends Controller
                             'totalDelayed' => $delayed,
                             'totalCancelled' => $cancelled,
                             'satisfactionRate' => number_format($satisfaction, 2)
+                            
                         ]);
 
                 } else {
