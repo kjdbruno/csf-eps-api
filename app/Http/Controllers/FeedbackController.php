@@ -30,7 +30,6 @@ use App\Mail\FeedbackOfficeMail;
 use Illuminate\Support\Facades\Mail;
 
 use Carbon\Carbon;
-use PDF;
 
 class FeedbackController extends Controller
 {
@@ -39,8 +38,6 @@ class FeedbackController extends Controller
      */
     public function getOverview(Request $request, $id)
     {
-        date_default_timezone_set('Asia/Manila');
-
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -55,11 +52,9 @@ class FeedbackController extends Controller
 
                 foreach ($feedbacks as $key => $f_value) {
                     
-                    $offices = FeedbackOffice::join('feedback', 'feedback_offices.feedbackID', 'feedback.id')
-                        ->where('feedback_offices.feedbackID', $f_value->id)
-                        ->where('feedback_offices.isReceived', FALSE)
-                        ->where('feedback_offices.isActive', TRUE)
-                        ->where('feedback.isActive', TRUE)
+                    $offices = FeedbackOffice::where('feedbackID', $f_value->id)
+                        ->where('isReceived', FALSE)
+                        ->where('isActive', TRUE)
                         ->update([
                             'isDelayed' => TRUE
                         ]);
@@ -114,68 +109,6 @@ class FeedbackController extends Controller
 
                 } else {
 
-                    $rating_sum = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
-                        ->join('feedback_offices', 'feedback_responses.feedbackID', 'feedback_offices.feedbackID')
-                        ->join('feedback', 'feedback_offices.feedbackID', 'feedback.id')
-                        ->whereNot('feedback_ratings.rating', 0)
-                        ->where('feedback_offices.officeID', $users[0]->officeID)
-                        ->whereYear('feedback.created_at', $users[0]->year)
-                        ->sum('feedback_ratings.rating');
-
-                    $rating_count = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
-                        ->join('feedback_offices', 'feedback_responses.feedbackID', 'feedback_offices.feedbackID')
-                        ->join('feedback', 'feedback_offices.feedbackID', 'feedback.id')
-                        ->whereNot('feedback_ratings.rating', 0)
-                        ->where('feedback_offices.officeID', $users[0]->officeID)
-                        ->whereYear('feedback.created_at', $users[0]->year)
-                        ->count();
-
-                    $maximum = (3 * $rating_count);
-                    $satisfaction = ((($rating_sum == 0 && $rating_count == 0) ? 0 : ($rating_sum / $maximum)) * 100);
-
-                    $total = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
-                        ->where('feedback_offices.officeID', $users[0]->officeID)
-                        ->whereYear('feedback.created_at', $users[0]->year)
-                        ->count();
-
-                    $pending = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
-                        ->where('feedback_offices.officeID', $users[0]->officeID)
-                        ->whereYear('feedback.created_at', $users[0]->year)
-                        ->where('feedback.status', 1)
-                        ->count();
-
-                    $ongoing = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
-                        ->where('feedback_offices.officeID', $users[0]->officeID)
-                        ->whereYear('feedback.created_at', $users[0]->year)
-                        ->where('feedback.status', 2)
-                        ->count();
-
-                    $completed = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
-                        ->where('feedback_offices.officeID', $users[0]->officeID)
-                        ->whereYear('feedback.created_at', $users[0]->year)
-                        ->where('feedback.status', 3)
-                        ->count();
-
-                    $delayed = FeedbackOffice::whereYear('created_at', $users[0]->year)
-                        ->where('officeID', $users[0]->officeID)
-                        ->where('isDelayed', TRUE)
-                        ->count();
-
-                    $cancelled = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
-                        ->where('feedback.isActive', FALSE)
-                        ->where('feedback_offices.officeID', $users[0]->officeID)
-                        ->whereYear('feedback.created_at', $users[0]->year)
-                        ->count();
-
-                        return response()->json([
-                            'totalFeedback' => $total,
-                            'totalPending' => $pending,
-                            'totalOngoing' => $ongoing,
-                            'totalCompleted' => $completed,
-                            'totalDelayed' => $delayed,
-                            'totalCancelled' => $cancelled,
-                            'satisfactionRate' => number_format($satisfaction, 2)
-                        ]);
                 }
 
         } catch (\Exception $e) {
@@ -194,8 +127,6 @@ class FeedbackController extends Controller
      */
     public function getList(Request $request, $id)
     {
-        date_default_timezone_set('Asia/Manila');
-
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -305,8 +236,6 @@ class FeedbackController extends Controller
      */
     public function receive(FeedbackReceiveRequest $request, $id)
     {
-        date_default_timezone_set('Asia/Manila');
-
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -353,8 +282,6 @@ class FeedbackController extends Controller
      */
     public function getDetail($id)
     {
-        date_default_timezone_set('Asia/Manila');
-
         try {
 
             $feedbacks = Feedback::select('feedback.*', 'users.name', 'users.email', 'users.avatar')
@@ -425,8 +352,6 @@ class FeedbackController extends Controller
      */
     public function getResponse($id)
     {
-        date_default_timezone_set('Asia/Manila');
-
         try {
 
             $responses = FeedbackResponse::select('feedback_responses.*', 'users.name', 'users.avatar', 'user_roles.roleID')
@@ -474,8 +399,6 @@ class FeedbackController extends Controller
      */
     public function response(FeedbackResponseRequest $request, $id)
     {
-        date_default_timezone_set('Asia/Manila');
-
         try {
 
             $response = new FeedbackResponse;
@@ -507,8 +430,6 @@ class FeedbackController extends Controller
      */
     public function complete(FeedbackCompleteRequest $request, $id)
     {
-        date_default_timezone_set('Asia/Manila');
-
         try {
 
             $feedback = Feedback::where('id', $request->get('feedbackID'))
@@ -543,8 +464,6 @@ class FeedbackController extends Controller
      */
     public function cancel($id)
     {
-        date_default_timezone_set('Asia/Manila');
-
         try {
 
             $feedback = Feedback::where('id', $id)
@@ -571,7 +490,6 @@ class FeedbackController extends Controller
      */
     public function offline(FeedbackEntryOfflineRequest $request)
     {
-        date_default_timezone_set('Asia/Manila');
         // Generate random verification code
         $code = random_int(100000, 999999);
         // avatar
@@ -726,88 +644,11 @@ class FeedbackController extends Controller
     /**
      * 
      */
-    public function getReport($id)
-    {
-        date_default_timezone_set('Asia/Manila');
-
-        try {
-
-            $feedbacks = Feedback::select('feedback.*', 'users.name', 'users.email', 'users.avatar', 'preference_categories.label AS category')
-                ->join('users', 'feedback.userID', 'users.id')
-                ->join('user_clients', 'users.id', 'user_clients.userID')
-                ->join('preference_categories', 'feedback.categoryID', 'preference_categories.id')
-                ->where('feedback.id', $id)
-                ->get();
-
-            $rating_sum = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
-                ->whereNot('feedback_ratings.rating', 0)
-                ->where('feedback_responses.feedbackID', $id)
-                ->sum('feedback_ratings.rating');
-
-            $rating_count = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
-                ->whereNot('feedback_ratings.rating', 0)
-                ->where('feedback_responses.feedbackID', $id)
-                ->count();
-
-            $maximum = (3 * $rating_count);
-            $rating = ((($rating_sum == 0 && $rating_count == 0) ? 0 : ($rating_sum / $maximum)) * 100);
-
-            $offices = FeedbackOffice::select('preference_offices.code AS office', 'feedback_offices.isReceived', 'feedback_offices.isDelayed')
-                    ->join('preference_offices', 'feedback_offices.officeID', 'preference_offices.id')
-                    ->where('feedback_offices.feedbackID', $id)
-                    ->get();
-
-            $evidences = FeedbackEvidence::where('feedbackID', $id)
-                ->get();
-
-            $responses = FeedbackResponse::select('feedback_responses.*', 'users.name', 'users.avatar', 'user_roles.roleID', 'preference_offices.label AS office')
-                ->join('users', 'feedback_responses.userID', 'users.id')
-                ->join('user_roles', 'users.id', 'user_roles.userID')
-                ->leftJoin('user_admins', 'users.id', 'user_admins.userID')
-                ->leftJoin('preference_offices', 'user_admins.officeID', 'preference_offices.id')
-                ->where('feedback_responses.feedbackID', $id)
-                ->orderBy('feedback_responses.created_at', 'DESC')
-                ->get();
-            
-            $today = Carbon::now(+8);
-            $now = $today->toDayDateTimeString(); 
-
-            $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true])->loadView('report.FeedbackDetailReport', [
-                'feedbacks' => $feedbacks,
-                'evidences' => $evidences,
-                'rating' => number_format($rating, 2),
-                'responses' => $responses,
-                'now' => $now
-            ])->setPaper('a4', 'portrait');
-
-            return $pdf->stream();
-
-            return response()->json($arr);
-
-        } catch (\Exception $e) {
-
-            logger('Message logged from FeedbackController.getReport', [$e->getMessage()]);
-            return response()->json([
-                'error' => 'Something went wrong getting record!',
-                'data' => $e->getMessage()
-            ], 400);
-
-        } 
-    }
-
-    /**
-     * 
-     */
     public function kiosk(FeedbackEntryKioskRequest $request)
     {
-        date_default_timezone_set('Asia/Manila');
-
         try {
 
             $kiosk = new KioskRating;
-            $kiosk->name = $request->get('name');
-            $kiosk->number = $request->get('number');
-            $kiosk->email = $request->get('email');
             $kiosk->kioskID = $request->get('personnelID');
             $kiosk->phyRating = $request->get('phyRating');
             $kiosk->serRating = $request->get('serRating');
@@ -841,68 +682,7 @@ class FeedbackController extends Controller
             $rating->save();
 
             return response()->json([
-                'msg' => 'RATING SAVED!',
-                'data' => $kiosk
-            ], 200);
-
-        } catch (\Exception $e) {
-
-            logger('Message logged from FeedbackController.kiosk', [$e->getMessage()]);
-            return response()->json([
-                'error' => 'Something went wrong storing record!',
-                'data' => $e->getMessage()
-            ], 400);
-
-        }
-    }
-
-    /**
-     * 
-     */
-    public function kioskEndpoint(FeedbackEntryKioskRequest $request)
-    {
-        date_default_timezone_set('Asia/Manila');
-        
-        try {
-
-            $kiosk = new KioskRating;
-            $kiosk->name = $request->get('name');
-            $kiosk->number = $request->get('number');
-            $kiosk->email = $request->get('email');
-            $kiosk->kioskID = $request->get('personnelID');
-            $kiosk->phyRating = $request->get('phyRating');
-            $kiosk->serRating = $request->get('serRating');
-            $kiosk->perRating = $request->get('perRating');
-            $kiosk->ovrRating = $request->get('ovrRating');
-            $kiosk->content = $request->get('suggestion');
-            $kiosk->save();
-            
-            $divisor = 0;
-            if ($request->get('phyRating') != 0) {
-                $phys = $divisor + 1;
-                $divisor = $phys;
-            }
-            if ($request->get('serRating') != 0) {
-                $sers = $divisor + 1;
-                $divisor = $sers;
-            }
-            if ($request->get('perRating') != 0) {
-                $pers = $divisor + 1;
-                $divisor = $pers;
-            }
-            if ($request->get('ovrRating') != 0) {
-                $ovrs = $divisor + 1;
-                $divisor = $ovrs;
-            }
-            $rate = ($divisor == 0 ? 0 : (($request->get('phyRating') + $request->get('serRating') + $request->get('perRating') + $request->get('ovrRating')) / $divisor));
-
-            $rating = new Rating;
-            $rating->officeID = $request->get('officeID');
-            $rating->rating = $rate;
-            $rating->save();
-
-            return response()->json([
-                'msg' => 'RATING SAVED!',
+                'msg' => 'RATING SAVED',
                 'data' => $kiosk
             ], 200);
 
