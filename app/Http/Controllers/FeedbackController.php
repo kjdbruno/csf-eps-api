@@ -114,7 +114,68 @@ class FeedbackController extends Controller
                         ]);
 
                 } else {
+                    $rating_sum = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
+                        ->join('feedback_offices', 'feedback_responses.feedbackID', 'feedback_offices.feedbackID')
+                        ->join('feedback', 'feedback_offices.feedbackID', 'feedback.id')
+                        ->whereNot('feedback_ratings.rating', 0)
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->sum('feedback_ratings.rating');
 
+                    $rating_count = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
+                        ->join('feedback_offices', 'feedback_responses.feedbackID', 'feedback_offices.feedbackID')
+                        ->join('feedback', 'feedback_offices.feedbackID', 'feedback.id')
+                        ->whereNot('feedback_ratings.rating', 0)
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->count();
+
+                    $maximum = (3 * $rating_count);
+                    $satisfaction = ((($rating_sum == 0 && $rating_count == 0) ? 0 : ($rating_sum / $maximum)) * 100);
+
+                    $total = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->count();
+
+                    $pending = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->where('feedback.status', 1)
+                        ->count();
+
+                    $ongoing = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->where('feedback.status', 2)
+                        ->count();
+
+                    $completed = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->where('feedback.status', 3)
+                        ->count();
+
+                    $delayed = FeedbackOffice::whereYear('created_at', $users[0]->year)
+                        ->where('officeID', $users[0]->officeID)
+                        ->where('isDelayed', TRUE)
+                        ->count();
+
+                    $cancelled = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback.isActive', FALSE)
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                        ->whereYear('feedback.created_at', $users[0]->year)
+                        ->count();
+
+                        return response()->json([
+                            'totalFeedback' => $total,
+                            'totalPending' => $pending,
+                            'totalOngoing' => $ongoing,
+                            'totalCompleted' => $completed,
+                            'totalDelayed' => $delayed,
+                            'totalCancelled' => $cancelled,
+                            'satisfactionRate' => number_format($satisfaction, 2)
+                        ]);
                 }
 
         } catch (\Exception $e) {
