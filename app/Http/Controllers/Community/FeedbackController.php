@@ -237,7 +237,7 @@ class FeedbackController extends Controller
             $rating->save();
 
             $feedback = new FeedbackRating;
-            $feedback->responseID = $request->get('responseID');
+            $feedback->responseID = $id;
             $feedback->rating = $request->get('rating');
             $feedback->save();
 

@@ -46,6 +46,11 @@ class UserController extends Controller
                             'data' => $client
                         ], 200);
 
+                } else {
+                    return response()->json([
+                        'msg' => 'ACCOUNT DOES NOT MATCH!',
+                        'exist' => true
+                    ], 400);
                 }
 
         } catch (\Exception $e) {
@@ -68,13 +73,13 @@ class UserController extends Controller
 
             $user = User::findOrFail($id);
             $user->name = $request->get('name');
+            $user->avatar = $request->get('avatar');
             $user->save();
 
             $client = UserClient::where('userID', $id)
                 ->update([
                     'sexID' => $request->get('sexID'),
-                    'number' => $request->get('number'),
-                    'avatar' => $request->get('avatar')
+                    'number' => $request->get('number')
                 ]);
 
                 return response()->json([

@@ -14,7 +14,6 @@ class FeedbackResponseRatingRequest extends FormRequest
     public function rules()
     {
         return [
-            'responseID' => 'required|integer',
             'rating' => 'required|integer'
         ];
     }
