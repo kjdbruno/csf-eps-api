@@ -806,6 +806,70 @@ class FeedbackController extends Controller
         try {
 
             $kiosk = new KioskRating;
+            $kiosk->name = $request->get('name');
+            $kiosk->number = $request->get('number');
+            $kiosk->email = $request->get('email');
+            $kiosk->kioskID = $request->get('personnelID');
+            $kiosk->phyRating = $request->get('phyRating');
+            $kiosk->serRating = $request->get('serRating');
+            $kiosk->perRating = $request->get('perRating');
+            $kiosk->ovrRating = $request->get('ovrRating');
+            $kiosk->content = $request->get('suggestion');
+            $kiosk->save();
+            
+            $divisor = 0;
+            if ($request->get('phyRating') != 0) {
+                $phys = $divisor + 1;
+                $divisor = $phys;
+            }
+            if ($request->get('serRating') != 0) {
+                $sers = $divisor + 1;
+                $divisor = $sers;
+            }
+            if ($request->get('perRating') != 0) {
+                $pers = $divisor + 1;
+                $divisor = $pers;
+            }
+            if ($request->get('ovrRating') != 0) {
+                $ovrs = $divisor + 1;
+                $divisor = $ovrs;
+            }
+            $rate = ($divisor == 0 ? 0 : (($request->get('phyRating') + $request->get('serRating') + $request->get('perRating') + $request->get('ovrRating')) / $divisor));
+
+            $rating = new Rating;
+            $rating->officeID = $request->get('officeID');
+            $rating->rating = $rate;
+            $rating->save();
+
+            return response()->json([
+                'msg' => 'RATING SAVED',
+                'data' => $kiosk
+            ], 200);
+
+        } catch (\Exception $e) {
+
+            logger('Message logged from FeedbackController.kiosk', [$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong storing record!',
+                'data' => $e->getMessage()
+            ], 400);
+
+        }
+    }
+
+    /**
+     * 
+     */
+    public function kioskEndpoint(FeedbackEntryKioskRequest $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        
+        try {
+
+            $kiosk = new KioskRating;
+            $kiosk->name = $request->get('name');
+            $kiosk->number = $request->get('number');
+            $kiosk->email = $request->get('email');
             $kiosk->kioskID = $request->get('personnelID');
             $kiosk->phyRating = $request->get('phyRating');
             $kiosk->serRating = $request->get('serRating');

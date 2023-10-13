@@ -783,10 +783,10 @@ class PreferenceController extends Controller
     public function getPersonnelEndpoint($id)
     {
         date_default_timezone_set('Asia/Manila');
-        
+
         try {
             return response()->json(
-                PreferenceKiosk::select('preference_kiosks.id', 'preference_kiosks.name AS label', 'preference_kiosks.description', 'preference_positions.label AS position', 'preference_offices.code AS office')
+                PreferenceKiosk::select('preference_kiosks.id', 'preference_kiosks.name AS label', 'preference_kiosks.description', 'preference_kiosks.photo', 'preference_positions.label AS position', 'preference_offices.code AS office')
                     ->join('preference_positions', 'preference_kiosks.positionID', 'preference_positions.id')
                     ->join('preference_offices', 'preference_kiosks.officeID', 'preference_offices.id')
                     ->where('preference_kiosks.officeID', $id)
