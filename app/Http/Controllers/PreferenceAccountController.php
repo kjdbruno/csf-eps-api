@@ -30,6 +30,8 @@ class PreferenceAccountController extends Controller
      */
     public function index(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = User::select('users.*', 'users.id AS uID', 'user_admins.officeID', 'user_admins.positionID', 'user_admins.employeeID', 'user_admins.yearID', 'preference_roles.label AS role','preference_offices.code AS office', 'preference_positions.label AS position', 'user_admins.isActive', 'user_admins.isVerified', 'user_roles.roleID', DB::raw("(SELECT COUNT(*) FROM user_admins WHERE userID = uID AND isActive = TRUE) AS adm"))
@@ -63,6 +65,8 @@ class PreferenceAccountController extends Controller
      */
     public function store(PreferenceAccountRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             Mail::to($request->get('email'))->send(new PreferenceAccountRegistrationMail($request->get('name')));
@@ -100,6 +104,8 @@ class PreferenceAccountController extends Controller
      */
     public function verify(PreferenceAccountVerifyRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $admin = new UserAdmin;
@@ -143,6 +149,8 @@ class PreferenceAccountController extends Controller
      */
     public function update(PreferenceAccountModifyRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $user = User::findOrFail($id);
@@ -185,6 +193,8 @@ class PreferenceAccountController extends Controller
      */
     public function reset(PreferenceAccountResetRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $user = User::findOrFail($id);
@@ -212,6 +222,8 @@ class PreferenceAccountController extends Controller
      */
     public function disable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $admin = UserAdmin::where('userID', $id)
@@ -240,6 +252,8 @@ class PreferenceAccountController extends Controller
      */
     public function enable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $admin = UserAdmin::where('userID', $id)

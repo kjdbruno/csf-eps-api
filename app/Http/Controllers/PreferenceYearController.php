@@ -16,6 +16,8 @@ class PreferenceYearController extends Controller
      */
     public function index(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceYear::where('label', 'LIKE', '%'.$request->get('filter').'%')
@@ -50,6 +52,8 @@ class PreferenceYearController extends Controller
      */
     public function store(PreferenceYearRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             /**
              * store year
@@ -105,6 +109,8 @@ class PreferenceYearController extends Controller
      */
     public function update(PreferenceYearRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             /**
              * update year
@@ -144,6 +150,8 @@ class PreferenceYearController extends Controller
      */
     public function disable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             /**
              * disable year
@@ -170,7 +178,10 @@ class PreferenceYearController extends Controller
     /**
      * Enable the specified resource from the storage
      */
-    public function enable($id) {
+    public function enable($id) 
+    {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
             /**
              * enable year

@@ -16,6 +16,8 @@ class SettingOfficeCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = SettingOfficeCategory::select('setting_office_categories.*', 'preference_offices.label AS office', 'preference_offices.code AS code', 'preference_categories.label AS category')
@@ -57,6 +59,8 @@ class SettingOfficeCategoryController extends Controller
      */
     public function store(SettingOfficeCategoryRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $setting = new SettingOfficeCategory;
@@ -111,6 +115,8 @@ class SettingOfficeCategoryController extends Controller
      */
     public function update(SettingOfficeCategoryRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $setting = SettingOfficeCategory::findOrFail($id);
@@ -150,6 +156,8 @@ class SettingOfficeCategoryController extends Controller
      */
     public function disable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $setting = SettingOfficeCategory::findOrFail($id);
@@ -177,6 +185,8 @@ class SettingOfficeCategoryController extends Controller
      */
     public function enable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $setting = SettingOfficeCategory::findOrFail($id);

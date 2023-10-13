@@ -20,6 +20,8 @@ class MyController extends Controller
      */
     public function updateUser(MyAccountUpdateRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $user = User::findOrFail($id);
@@ -52,6 +54,8 @@ class MyController extends Controller
      */
     public function settingUser(MyAccountSettingRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $admin = UserAdmin::where('userID', $id)
@@ -80,6 +84,8 @@ class MyController extends Controller
      */
     public function resetUser(MyAccountResetRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $user = User::findOrFail($id);

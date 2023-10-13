@@ -25,6 +25,9 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): Response
     {
+        
+        date_default_timezone_set('Asia/Manila');
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],

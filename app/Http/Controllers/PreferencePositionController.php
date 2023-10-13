@@ -16,17 +16,23 @@ class PreferencePositionController extends Controller
      */
     public function index(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
+
             $preference = PreferencePosition::where('label', 'LIKE', '%'.$request->get('filter').'%')
                 ->orderBy('created_at', 'DESC')
                 ->get();
                 return response()->json($preference);
+
         } catch (\Exception $e) {
+
             logger('Message logged from PreferencePositionController.index', [$e->getMessage()]);
             return response()->json([
                 'error' => 'Something went wrong getting record',
                 'msg' => $e->getMessage()
             ]);
+
         }
     }
 
@@ -48,6 +54,8 @@ class PreferencePositionController extends Controller
      */
     public function store(PreferencePositionRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = new PreferencePosition;
@@ -99,6 +107,8 @@ class PreferencePositionController extends Controller
      */
     public function update(PreferencePositionRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferencePosition::findOrFail($id);
@@ -137,6 +147,8 @@ class PreferencePositionController extends Controller
      */
     public function disable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferencePosition::findOrFail($id);
@@ -164,6 +176,8 @@ class PreferencePositionController extends Controller
      */
     public function enable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $preference = PreferencePosition::findOrFail($id);

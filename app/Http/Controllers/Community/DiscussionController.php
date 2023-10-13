@@ -22,6 +22,8 @@ class DiscussionController extends Controller
      */
     public function index()
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $discussions = Discussion::select('discussions.*', 'preference_categories.label AS category')
@@ -48,6 +50,8 @@ class DiscussionController extends Controller
      */
     public function getThread($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $thread = DiscussionThread::select('discussion_threads.*', 'users.name', 'users.email', 'users.avatar', 'preference_offices.label AS office')
@@ -77,6 +81,8 @@ class DiscussionController extends Controller
      */
     public function thread(DiscussionThreadRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $thread = new DiscussionThread;
@@ -106,6 +112,8 @@ class DiscussionController extends Controller
      */
     public function getPoll($discussionID, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $discussions = DiscussionPoll::where('discussionID', $discussionID)
@@ -138,6 +146,7 @@ class DiscussionController extends Controller
      */
     public function answer(DiscussionPollRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
         try {
 
             $poll = new DiscussionAnswer;

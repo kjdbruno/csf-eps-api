@@ -31,6 +31,8 @@ class FeedbackController extends Controller
      */
     public function index(Request $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $feedbacks = Feedback::select('feedback.*', 'users.name', 'users.avatar')
@@ -79,6 +81,8 @@ class FeedbackController extends Controller
      */
     public function store(FeedbackPostingRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $feedback = new Feedback;
@@ -142,6 +146,8 @@ class FeedbackController extends Controller
      */
     public function getResponse($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $responses = FeedbackResponse::select('feedback_responses.*', 'users.name', 'users.avatar', 'preference_offices.label AS office', 'user_roles.roleID')
@@ -193,6 +199,8 @@ class FeedbackController extends Controller
      */
     public function response(FeedbackResponseRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $response = new FeedbackResponse;
@@ -224,6 +232,8 @@ class FeedbackController extends Controller
      */
     public function rating(FeedbackResponseRatingRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $responses = FeedbackResponse::select('user_admins.officeID')

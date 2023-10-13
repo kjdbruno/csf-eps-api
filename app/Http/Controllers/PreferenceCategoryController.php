@@ -16,26 +16,20 @@ class PreferenceCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
-
-            try {
-                $preference= PreferenceCategory::Where('label', 'LIKE', '%'.$request->get('filter').'%')
-                    ->orderBy('created_at', 'DESC')
-                    ->get();
-                    return response()->json($preference);
-            } catch (\Exception $e) {
-                
-                logger('Message logged from PreferenceCategoryController.index', [$e->getMessage()]);
-                return response()->json([
-                    'error' => 'Something went wrong getting record',
-                    'msg' => $e->getMessage()
-                ], 400);
-
-            }
-
+            $preference= PreferenceCategory::Where('label', 'LIKE', '%'.$request->get('filter').'%')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+                return response()->json($preference);
         } catch (\Exception $e) {
-
-
+            
+            logger('Message logged from PreferenceCategoryController.index', [$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong getting record',
+                'msg' => $e->getMessage()
+            ], 400);
 
         }
     }
@@ -58,6 +52,8 @@ class PreferenceCategoryController extends Controller
      */
     public function store(PreferenceCategoryRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = new PreferenceCategory;
@@ -111,6 +107,8 @@ class PreferenceCategoryController extends Controller
      */
     public function update(PreferenceCategoryRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceCategory::findOrFail($id);
@@ -149,6 +147,8 @@ class PreferenceCategoryController extends Controller
      */
     public function disable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceCategory::findOrFail($id);
@@ -174,7 +174,10 @@ class PreferenceCategoryController extends Controller
     /**
      * Enable the specified resource from the storage
      */
-    public function enable($id) {
+    public function enable($id) 
+    {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $preference = PreferenceCategory::findOrFail($id);

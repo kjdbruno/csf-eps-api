@@ -21,6 +21,8 @@ class PreferenceKioskController extends Controller
      */
     public function index(Request $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -138,6 +140,8 @@ class PreferenceKioskController extends Controller
      */
     public function store(PreferenceKioskRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = new PreferenceKiosk;
@@ -173,6 +177,8 @@ class PreferenceKioskController extends Controller
      */
     public function update(PreferenceKioskRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceKiosk::findOrFail($id);
@@ -204,6 +210,8 @@ class PreferenceKioskController extends Controller
      */
     public function disable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceKiosk::findOrFail($id);
@@ -231,6 +239,8 @@ class PreferenceKioskController extends Controller
      */
     public function enable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceKiosk::findOrFail($id);
@@ -258,6 +268,8 @@ class PreferenceKioskController extends Controller
      */
     public function getKiosk($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $kiosks = PreferenceKiosk::select('preference_kiosks.*', 'preference_offices.label AS office', 'preference_positions.label AS position')
@@ -349,6 +361,8 @@ class PreferenceKioskController extends Controller
      */
     public function getReport($id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $kiosks = PreferenceKiosk::select('preference_kiosks.*', 'preference_offices.label AS office', 'preference_positions.label AS position')

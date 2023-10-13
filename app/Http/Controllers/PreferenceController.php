@@ -31,6 +31,8 @@ class PreferenceController extends Controller
      */
     public function getOverview($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -602,6 +604,8 @@ class PreferenceController extends Controller
      */
     public function getYear()
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             return response()->json(
                 PreferenceYear::select('id AS value', 'label')
@@ -622,6 +626,8 @@ class PreferenceController extends Controller
      */
     public function getSex()
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             return response()->json(
                 PreferenceSex::select('id AS value', 'label')
@@ -642,6 +648,8 @@ class PreferenceController extends Controller
      */
     public function getRole()
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             return response()->json(
                 PreferenceRole::select('id AS value', 'label')
@@ -661,6 +669,8 @@ class PreferenceController extends Controller
      */
     public function getPosition()
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             return response()->json(
                 PreferencePosition::select('id AS value', 'label')
@@ -681,6 +691,8 @@ class PreferenceController extends Controller
      */
     public function getOffice()
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             return response()->json(
                 PreferenceOffice::select('id AS value', 'label')
@@ -701,6 +713,8 @@ class PreferenceController extends Controller
      */
     public function getCategory()
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             return response()->json(
                 PreferenceCategory::select('id AS value', 'label')
@@ -721,6 +735,8 @@ class PreferenceController extends Controller
      */
     public function getPersonnel($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             return response()->json(
                 PreferenceKiosk::select('preference_kiosks.id', 'preference_kiosks.name AS label', 'preference_kiosks.description', 'preference_kiosks.photo', 'preference_positions.label AS position', 'preference_offices.code AS office')
@@ -744,6 +760,8 @@ class PreferenceController extends Controller
      */
     public function getOfficeEndpoint()
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             return response()->json(
                 PreferenceOffice::select('id AS value', 'label')
@@ -764,6 +782,8 @@ class PreferenceController extends Controller
      */
     public function getPersonnelEndpoint($id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
             return response()->json(
                 PreferenceKiosk::select('preference_kiosks.id', 'preference_kiosks.name AS label', 'preference_kiosks.description', 'preference_positions.label AS position', 'preference_offices.code AS office')

@@ -39,6 +39,8 @@ class FeedbackController extends Controller
      */
     public function getOverview(Request $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -192,6 +194,8 @@ class FeedbackController extends Controller
      */
     public function getList(Request $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -301,6 +305,8 @@ class FeedbackController extends Controller
      */
     public function receive(FeedbackReceiveRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -347,6 +353,8 @@ class FeedbackController extends Controller
      */
     public function getDetail($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $feedbacks = Feedback::select('feedback.*', 'users.name', 'users.email', 'users.avatar')
@@ -417,6 +425,8 @@ class FeedbackController extends Controller
      */
     public function getResponse($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $responses = FeedbackResponse::select('feedback_responses.*', 'users.name', 'users.avatar', 'user_roles.roleID')
@@ -464,6 +474,8 @@ class FeedbackController extends Controller
      */
     public function response(FeedbackResponseRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $response = new FeedbackResponse;
@@ -495,6 +507,8 @@ class FeedbackController extends Controller
      */
     public function complete(FeedbackCompleteRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $feedback = Feedback::where('id', $request->get('feedbackID'))
@@ -529,6 +543,8 @@ class FeedbackController extends Controller
      */
     public function cancel($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $feedback = Feedback::where('id', $id)
@@ -555,6 +571,7 @@ class FeedbackController extends Controller
      */
     public function offline(FeedbackEntryOfflineRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
         // Generate random verification code
         $code = random_int(100000, 999999);
         // avatar
@@ -711,6 +728,8 @@ class FeedbackController extends Controller
      */
     public function getReport($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $feedbacks = Feedback::select('feedback.*', 'users.name', 'users.email', 'users.avatar', 'preference_categories.label AS category')
@@ -781,6 +800,8 @@ class FeedbackController extends Controller
      */
     public function kiosk(FeedbackEntryKioskRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $kiosk = new KioskRating;
@@ -840,6 +861,8 @@ class FeedbackController extends Controller
      */
     public function kioskEndpoint(FeedbackEntryKioskRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $kiosk = new KioskRating;

@@ -24,6 +24,8 @@ class UserController extends Controller
      */
     public function verifyUser(UserVerificationRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             $user = User::where('id', $id)
                 ->get();
@@ -69,6 +71,8 @@ class UserController extends Controller
      */
     public function updateUser(UserUpdateRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $user = User::findOrFail($id);
@@ -103,6 +107,8 @@ class UserController extends Controller
      */
     public function resetUser(UserResetRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $user = User::findOrFail($id);

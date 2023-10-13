@@ -29,6 +29,8 @@ class ReportController extends Controller
      */
     public function getSummary(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $start = Carbon::create($request->get('from').' 00:00:00');
@@ -189,6 +191,8 @@ class ReportController extends Controller
      */
     public function getPerformance(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $start = Carbon::create($request->get('from').' 00:00:00');
@@ -399,6 +403,8 @@ class ReportController extends Controller
      */
     public function getFeedbackSummary(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $start = Carbon::create($request->get('from').' 00:00:00');
@@ -523,6 +529,8 @@ class ReportController extends Controller
      */
     public function getFeedbackCategory(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $start = Carbon::create($request->get('from').' 00:00:00');
@@ -596,6 +604,8 @@ class ReportController extends Controller
      */
     public function getFeedbackStatus(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $start = Carbon::create($request->get('from').' 00:00:00');
@@ -661,6 +671,8 @@ class ReportController extends Controller
      */
     public function getFeedbackOffice(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $start = Carbon::create($request->get('from').' 00:00:00');
@@ -807,6 +819,8 @@ class ReportController extends Controller
      */
     public function getFeedbackKiosk(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $start = Carbon::create($request->get('from').' 00:00:00');
@@ -916,6 +930,8 @@ class ReportController extends Controller
      */
     public function getDiscussionSummary(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $start = Carbon::create($request->get('from').' 00:00:00');

@@ -16,6 +16,8 @@ class PreferenceOfficeController extends Controller
      */
     public function index(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference= PreferenceOffice::where('code', 'LIKE', '%'.$request->get('filter').'%')
@@ -53,6 +55,8 @@ class PreferenceOfficeController extends Controller
      */
     public function store(PreferenceOfficeRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = new PreferenceOffice;
@@ -107,6 +111,8 @@ class PreferenceOfficeController extends Controller
      */
     public function update(PreferenceOfficeRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceOffice::findOrFail($id);
@@ -146,6 +152,8 @@ class PreferenceOfficeController extends Controller
      */
     public function disable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceOffice::findOrFail($id);
@@ -173,6 +181,8 @@ class PreferenceOfficeController extends Controller
      */
     public function enable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $preference = PreferenceOffice::findOrFail($id);

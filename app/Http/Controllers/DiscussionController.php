@@ -25,6 +25,8 @@ class DiscussionController extends Controller
      */
     public function getOverview($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -124,6 +126,8 @@ class DiscussionController extends Controller
      */
     public function getList(Request $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
@@ -233,6 +237,8 @@ class DiscussionController extends Controller
      */
     public function store(DiscussionRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $discussion = new Discussion;
@@ -264,6 +270,8 @@ class DiscussionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $discussion = Discussion::findOrFail($id);
@@ -295,6 +303,8 @@ class DiscussionController extends Controller
      */
     public function disable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $discussion = Discussion::findOrFail($id);
@@ -322,6 +332,8 @@ class DiscussionController extends Controller
      */
     public function enable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $discussion = Discussion::findOrFail($id);
@@ -349,6 +361,8 @@ class DiscussionController extends Controller
      */
     public function getDetail($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $discussions = Discussion::select('discussions.*', 'preference_categories.label AS category')
@@ -374,6 +388,8 @@ class DiscussionController extends Controller
      */
     public function getThread($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $discussions = Discussionthread::select('discussion_threads.*', 'users.name', 'users.email', 'users.avatar', 'preference_offices.label AS office')
@@ -403,6 +419,8 @@ class DiscussionController extends Controller
      */
     public function getAnswer($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $discussions = DiscussionPoll::where('discussionID', $id)
@@ -444,6 +462,8 @@ class DiscussionController extends Controller
      */
     public function thread(DiscussionThreadRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $thread = new DiscussionThread;
@@ -473,6 +493,8 @@ class DiscussionController extends Controller
      */
     public function answer(DiscussionPollRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
             
             $answer = new DiscussionPoll;
@@ -501,6 +523,8 @@ class DiscussionController extends Controller
      */
     public function disableThread($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $thread = DiscussionThread::findOrFail($id);
@@ -528,6 +552,8 @@ class DiscussionController extends Controller
      */
     public function enableThread($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $thread = DiscussionThread::findOrFail($id);
@@ -555,6 +581,8 @@ class DiscussionController extends Controller
      */
     public function disableAnswer($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $answer = DiscussionPoll::findOrFail($id);
@@ -582,6 +610,8 @@ class DiscussionController extends Controller
      */
     public function enableAnswer($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $answer = DiscussionPoll::findOrFail($id);
@@ -609,6 +639,8 @@ class DiscussionController extends Controller
      */
     public function getReport($id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $discussions = Discussion::select('discussions.*', 'preference_categories.label AS category')

@@ -16,6 +16,8 @@ class PreferenceMessageController extends Controller
      */
     public function index(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference= PreferenceMessage::where('title', 'LIKE', '%'.$request->get('filter').'%')
@@ -53,6 +55,8 @@ class PreferenceMessageController extends Controller
      */
     public function store(PreferenceMessageRequest $request)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = new PreferenceMessage;
@@ -107,6 +111,8 @@ class PreferenceMessageController extends Controller
      */
     public function update(PreferenceMessageRequest $request, $id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceMessage::findOrfail($id);
@@ -146,6 +152,8 @@ class PreferenceMessageController extends Controller
      */
     public function disable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+
         try {
 
             $preference = PreferenceMessage::findOrfail($id);
@@ -173,6 +181,8 @@ class PreferenceMessageController extends Controller
      */
     public function enable($id)
     {
+        date_default_timezone_set('Asia/Manila');
+        
         try {
 
             $preference = PreferenceMessage::findOrfail($id);
