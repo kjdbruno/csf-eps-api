@@ -52,7 +52,7 @@ class FeedbackController extends Controller
             $now = NOW();
             $today = date_format($now, 'Y-m-d h:i:s');
 
-            $feedbacks = Feedback::where('expire_on', '>', $today)
+            $feedbacks = Feedback::where('expire_on', '<', $today)
                 ->get();
 
                 foreach ($feedbacks as $key => $f_value) {
