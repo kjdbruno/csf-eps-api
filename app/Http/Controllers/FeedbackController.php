@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Mail;
 
 use Carbon\Carbon;
 
+USE PDF;
+
 class FeedbackController extends Controller
 {
     /**
