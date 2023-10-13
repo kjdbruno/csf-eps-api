@@ -52,19 +52,14 @@ class FeedbackController extends Controller
             $now = NOW();
             $today = date_format($now, 'Y-m-d h:i:s');
 
-            $feedbacks = Feedback::where('expire_on', '<=', $today)
-                ->get();
-
-                foreach ($feedbacks as $key => $f_value) {
-                    
-                    $offices = FeedbackOffice::where('feedbackID', $f_value->id)
-                        ->where('isReceived', FALSE)
-                        ->where('isActive', TRUE)
-                        ->update([
-                            'isDelayed' => TRUE
-                        ]);
-
-                }
+            $offices = FeedbackOffice::join('feedback', 'feedback_offices.feedbackID', 'feedback.id')
+                ->where('feedback.expire_on', '<=', $today)
+                ->where('feedback_offices.feedbackID', $f_value->id)
+                ->where('feedback_offices.isReceived', FALSE)
+                ->where('feedback_offices.isActive', TRUE)
+                ->update([
+                    'feedback_offices.isDelayed' => TRUE
+                ]);
 
                 if ($users[0]->roleID == 1 OR $users[0]->roleID == 2 OR $users[0]->roleID == 3) {
 
