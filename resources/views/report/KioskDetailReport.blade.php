@@ -99,7 +99,7 @@
                 </tr>
                 <tr>
                     <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">date</div></td>
-                    <td width="75%"><div style="font-size: .85em;">{{ $list[0]->created_at->format('F d, Y h:i a') }}</div></td>
+                    <td width="75%"><div style="font-size: .85em;">{{ $list[0]->created_at->format('F d, Y') }}</div></td>
                 </tr>
                 @endforeach
             </table>
