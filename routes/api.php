@@ -27,7 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /**
      * CLIENT
      */
-    Route::put('/community/verify/{id}', [\App\Http\Controllers\Community\UserController::class, 'verifyUser']);
+    Route::post('/community/verify', [\App\Http\Controllers\Community\UserController::class, 'verifyUser']);
     Route::put('/community/update/{id}', [\App\Http\Controllers\Community\UserController::class, 'updateUser']);
     Route::put('/community/reset/{id}', [\App\Http\Controllers\Community\UserController::class, 'resetUser']);
     //

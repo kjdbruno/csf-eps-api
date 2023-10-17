@@ -14,6 +14,7 @@ class UserVerificationRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'required|integer',
             'code' => 'required|digits:6',
             'number' => 'required|digits:11',
             'sexID' => 'required|integer'

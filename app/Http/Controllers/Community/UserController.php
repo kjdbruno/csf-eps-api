@@ -22,20 +22,20 @@ class UserController extends Controller
     /**
      * 
      */
-    public function verifyUser(UserVerificationRequest $request, $id)
+    public function verifyUser(UserVerificationRequest $request)
     {
         date_default_timezone_set('Asia/Manila');
 
         try {
-            // $user = User::where('id', $id)
-            //     ->get();
+            $user = User::where('id', $request->get('id'))
+                ->get();
 
-                if (UserClient::where('userID', $id)->where('verification', $request->get('code'))->exists()) {
+                if (UserClient::where('userID', $request->get('id'))->where('verification', $request->get('code'))->exists()) {
 
                     // send email
-                    // Mail::to($user[0]->email)->send(new UserVerificationMail($user[0]->name));
+                    Mail::to($user[0]->email)->send(new UserVerificationMail($user[0]->name));
 
-                    $client = UserClient::where('userID', $id)
+                    $client = UserClient::where('userID', $request->get('id'))
                         ->where('verification', $request->get('code'))
                         ->update([
                             'sexID' => $request->get('sexID'),
