@@ -19,6 +19,7 @@ Route::get('/endpoint/getPersonnel/{id}', [\App\Http\Controllers\PreferenceContr
 Route::post('/endpoint/kiosk', [\App\Http\Controllers\FeedbackController::class, 'kioskEndpoint']); // create feedback entry
 
 Route::post('/auth/login', [\App\Http\Controllers\Auth\AuthController::class, 'authenticate']); // create authentication
+Route::post('/auth/register', [\App\Http\Controllers\Auth\AuthController::class, 'register']); // create user
 
 Route::middleware(['auth:sanctum'])->group(function () {
     // return $request->user();
