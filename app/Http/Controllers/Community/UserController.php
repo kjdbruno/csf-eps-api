@@ -22,7 +22,7 @@ class UserController extends Controller
     /**
      * 
      */
-    public function verifyUser(Request $request, $id)
+    public function verifyUser(UserVerificationRequest $request, $id)
     {
         date_default_timezone_set('Asia/Manila');
 
