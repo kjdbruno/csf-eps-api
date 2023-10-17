@@ -14,6 +14,7 @@ class DiscussionPollRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'required|integer',
             'discussionID' => 'required|integer',
             'answerID' => 'required|integer'
         ];

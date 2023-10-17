@@ -79,7 +79,7 @@ class DiscussionController extends Controller
     /**
      * 
      */
-    public function thread(DiscussionThreadRequest $request, $id)
+    public function thread(DiscussionThreadRequest $request)
     {
         date_default_timezone_set('Asia/Manila');
 
@@ -87,7 +87,7 @@ class DiscussionController extends Controller
 
             $thread = new DiscussionThread;
             $thread->discussionID = $request->get('discussionID');
-            $thread->userID= $id;
+            $thread->userID= $request->get('id');
             $thread->content = $request->get('content');
             $thread->save();
 
@@ -144,13 +144,13 @@ class DiscussionController extends Controller
     /**
      * 
      */
-    public function answer(DiscussionPollRequest $request, $id)
+    public function answer(DiscussionPollRequest $request)
     {
         date_default_timezone_set('Asia/Manila');
         try {
 
             $poll = new DiscussionAnswer;
-            $poll->userID = $id;
+            $poll->userID = $request->get('id');
             $poll->discussionID = $request->get('discussionID');
             $poll->answerID = $request->get('answerID');
             $poll->save();

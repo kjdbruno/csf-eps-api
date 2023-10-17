@@ -69,18 +69,19 @@ class UserController extends Controller
     /**
      * 
      */
-    public function updateUser(UserUpdateRequest $request, $id)
+    public function updateUser(UserUpdateRequest $request)
     {
         date_default_timezone_set('Asia/Manila');
 
         try {
 
-            $user = User::findOrFail($id);
-            $user->name = $request->get('name');
-            $user->avatar = $request->get('avatar');
-            $user->save();
+            $user = User::where('id', $request->get('id'))
+                ->update([
+                    'name' => $request->get('name'),
+                    'avatar' => $request->get('avatar')
+                ]);
 
-            $client = UserClient::where('userID', $id)
+            $client = UserClient::where('userID', $request->get('id'))
                 ->update([
                     'sexID' => $request->get('sexID'),
                     'number' => $request->get('number')
@@ -105,15 +106,16 @@ class UserController extends Controller
     /**
      * 
      */
-    public function resetUser(UserResetRequest $request, $id)
+    public function resetUser(UserResetRequest $request)
     {
         date_default_timezone_set('Asia/Manila');
         
         try {
 
-            $user = User::findOrFail($id);
-            $user->password = Hash::make($request->get('password'));
-            $user->save();
+            $user = User::where('id', $request->get('id'))
+                ->update([
+                    'password' => Hash::make($request->get('password'))
+                ]);
 
             return response()->json([
                 'msg' => 'RECORD RESET!',

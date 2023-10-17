@@ -14,6 +14,7 @@ class FeedbackResponseRequest extends FormRequest
     public function rules()
     {
         return [
+            'userID' => 'required|integer',
             'feedbackID' => 'required|integer',
             'content' => 'required|string'
         ];

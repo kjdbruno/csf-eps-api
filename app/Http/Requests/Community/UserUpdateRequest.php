@@ -14,6 +14,7 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'required|integer',
             'name' => 'required|string|max:255',
             'sexID' => 'required|integer',
             'number' => 'required|digits:11',

@@ -197,7 +197,7 @@ class FeedbackController extends Controller
     /**
      * 
      */
-    public function response(FeedbackResponseRequest $request, $id)
+    public function response(FeedbackResponseRequest $request)
     {
         date_default_timezone_set('Asia/Manila');
 
@@ -205,7 +205,7 @@ class FeedbackController extends Controller
 
             $response = new FeedbackResponse;
             $response->feedbackID = $request->get('feedbackID');
-            $response->userID = $id;
+            $response->userID = $request->get('userID');
             $response->status = 2;
             $response->content = $request->get('content');
             $response->file = '';
@@ -230,7 +230,7 @@ class FeedbackController extends Controller
     /**
      * 
      */
-    public function rating(FeedbackResponseRatingRequest $request, $id)
+    public function rating(FeedbackResponseRatingRequest $request)
     {
         date_default_timezone_set('Asia/Manila');
         
@@ -238,7 +238,7 @@ class FeedbackController extends Controller
 
             $responses = FeedbackResponse::select('user_admins.officeID')
                 ->join('user_admins', 'feedback_responses.userID', 'user_admins.userID')
-                ->where('feedback_responses.id', $id)
+                ->where('feedback_responses.id', $request->get('id'))
                 ->get();
 
             $rating = new Rating;
@@ -247,7 +247,7 @@ class FeedbackController extends Controller
             $rating->save();
 
             $feedback = new FeedbackRating;
-            $feedback->responseID = $id;
+            $feedback->responseID = $request->get('id');
             $feedback->rating = $request->get('rating');
             $feedback->save();
 

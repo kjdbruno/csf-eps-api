@@ -28,20 +28,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
      * CLIENT
      */
     Route::post('/community/verify', [\App\Http\Controllers\Community\UserController::class, 'verifyUser']);
-    Route::put('/community/update/{id}', [\App\Http\Controllers\Community\UserController::class, 'updateUser']);
-    Route::put('/community/reset/{id}', [\App\Http\Controllers\Community\UserController::class, 'resetUser']);
+    Route::post('/community/update', [\App\Http\Controllers\Community\UserController::class, 'updateUser']);
+    Route::post('/community/reset', [\App\Http\Controllers\Community\UserController::class, 'resetUser']);
     //
     Route::get('/community/feedback/{id}', [\App\Http\Controllers\Community\FeedbackController::class, 'index']);
     Route::post('/community/feedback', [\App\Http\Controllers\Community\FeedbackController::class, 'store']);
     Route::get('/community/feedback/response/{id}', [\App\Http\Controllers\Community\FeedbackController::class, 'getResponse']);
-    Route::put('/community/feedback/response/{id}', [\App\Http\Controllers\Community\FeedbackController::class, 'response']);
-    Route::put('/community/feedback/rating/{id}', [\App\Http\Controllers\Community\FeedbackController::class, 'rating']);
+    Route::post('/community/feedback/response', [\App\Http\Controllers\Community\FeedbackController::class, 'response']);
+    Route::post('/community/feedback/rating', [\App\Http\Controllers\Community\FeedbackController::class, 'rating']);
     //
     Route::get('/community/discussion', [\App\Http\Controllers\Community\DiscussionController::class, 'index']);
     Route::get('/community/discussion/{id}', [\App\Http\Controllers\Community\DiscussionController::class, 'getThread']);
-    Route::put('/community/discussion/thread/{id}', [\App\Http\Controllers\Community\DiscussionController::class, 'thread']);
+    Route::post('/community/discussion/thread', [\App\Http\Controllers\Community\DiscussionController::class, 'thread']);
     Route::get('/community/discussion/poll/{discussionID}/{id}', [\App\Http\Controllers\Community\DiscussionController::class, 'getPoll']);
-    Route::put('/community/discussion/poll/{id}', [\App\Http\Controllers\Community\DiscussionController::class, 'answer']);
+    Route::post('/community/discussion/poll', [\App\Http\Controllers\Community\DiscussionController::class, 'answer']);
     /**
      * 
      */

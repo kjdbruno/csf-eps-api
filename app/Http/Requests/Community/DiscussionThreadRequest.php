@@ -14,6 +14,7 @@ class DiscussionThreadRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'required|integer',
             'discussionID' => 'required|integer',
             'content' => 'required|string'
         ];

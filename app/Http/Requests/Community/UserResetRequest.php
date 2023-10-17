@@ -14,6 +14,7 @@ class UserResetRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'required|integer',
             'oldPassword' => 'required|string|max:255',
             'password' => 'required|string|min:4|confirmed',
         ];
