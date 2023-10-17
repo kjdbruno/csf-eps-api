@@ -18,6 +18,8 @@ Route::get('/endpoint/getOffice', [\App\Http\Controllers\PreferenceController::c
 Route::get('/endpoint/getPersonnel/{id}', [\App\Http\Controllers\PreferenceController::class, 'getPersonnelEndpoint']); // get personnel
 Route::post('/endpoint/kiosk', [\App\Http\Controllers\FeedbackController::class, 'kioskEndpoint']); // create feedback entry
 
+Route::post('/auth/login', [\App\Http\Controllers\Auth\AuthController::class, 'authenticate']); // create authentication
+
 Route::middleware(['auth:sanctum'])->group(function () {
     // return $request->user();
     Route::get('/auth/user', [\App\Http\Controllers\Auth\AuthController::class, 'getUser']);

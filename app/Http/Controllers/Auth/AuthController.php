@@ -9,9 +9,28 @@ use App\Models\User;
 use App\Models\UserRole;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+ 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+ 
+            return response()->noContent();
+        }
+
+        return response()->json([
+            'noMatch' => true,
+            'msg' => 'Credentials does not match!',
+        ], 401);
+    }
     public function getUser()
     {
         try {
