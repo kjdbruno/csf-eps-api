@@ -71,7 +71,6 @@
             <img src="https://www.sanfernandocity.gov.ph/csflu_website/wp-content/uploads/2020/04/San-Fernando-Seal_1-500x500.jpg" width="75" height="75" style="border-bottom: 15px;" />
             <div class="h4">Kiosk Report</div>
         </div>
-        @if (!$kiosks->isEmpty())
         <div style="padding: 25px 0px 0px 0px;">
             <table>
                 <tr>
@@ -104,7 +103,6 @@
                 @endforeach
             </table>
         </div>
-        @endif
         <div style="padding: 25px 0px 0px 0px;">
             <table>
                 <tr>
