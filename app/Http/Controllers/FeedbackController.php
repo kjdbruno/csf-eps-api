@@ -451,6 +451,7 @@ class FeedbackController extends Controller
                             'file' => $r_value->file,
                             'name' => $r_value->name,
                             'avatar' => $r_value->avatar,
+                            'created_at' => $r_value->created_at,
                             'rating' => (count($rating) == 0 ? 0 : $rating[0]->rating)
                         ];
 
