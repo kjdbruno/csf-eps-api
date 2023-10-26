@@ -18,7 +18,7 @@ class FeedbackEntryKioskRequest extends FormRequest
             'number' => 'sometimes',
             'email' => 'sometimes',
             'officeID' => 'required|integer',
-            'personnelID' => 'required|integer',
+            'personnelID' => 'sometimes',
             'phyRating' => 'required',
             'serRating' => 'required',
             'perRating' => 'required',

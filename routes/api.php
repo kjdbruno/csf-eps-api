@@ -129,6 +129,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/kiosk/enable/{id}', [\App\Http\Controllers\PreferenceKioskController::class, 'enable']); // enable kiosk
     Route::get('/kiosk/detail/{id}', [\App\Http\Controllers\PreferenceKioskController::class, 'getKiosk']); // get kiosk detail
     Route::get('/kiosk/report/{id}', [\App\Http\Controllers\PreferenceKioskController::class, 'getReport']); // get kiosk report
+    Route::get('/kiosk/office/report/{id}', [\App\Http\Controllers\PreferenceKioskController::class, 'getOfficeReport']); // get office kiosk report
     /**
      * DISCUSSION
      */
@@ -159,6 +160,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/report/feedback/status', [\App\Http\Controllers\ReportController::class, 'getFeedbackStatus']); // feedback status
     Route::get('/report/feedback/office', [\App\Http\Controllers\ReportController::class, 'getFeedbackOffice']); // feedback office
     Route::get('/report/feedback/kiosk', [\App\Http\Controllers\ReportController::class, 'getFeedbackKiosk']); // feedback kiosk
+    Route::get('/report/feedback/kiosk/office', [\App\Http\Controllers\ReportController::class, 'getFeedbackKioskOffice']); // feedback kiosk office
     //
     Route::get('/report/discussion/summary', [\App\Http\Controllers\ReportController::class, 'getDiscussionSummary']); // discussion summary
 });

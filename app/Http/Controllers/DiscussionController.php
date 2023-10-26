@@ -677,6 +677,9 @@ class DiscussionController extends Controller
 
                 }
 
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
             $today = Carbon::now(+8);
             $now = $today->toDayDateTimeString(); 
 
@@ -684,6 +687,7 @@ class DiscussionController extends Controller
                 'discussions' => $discussions,
                 'threads' => $threads,
                 'poll' => $arr,
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'portrait');
 

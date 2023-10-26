@@ -42,7 +42,7 @@ class PreferenceAccountController extends Controller
                 ->leftJoin('preference_positions', 'user_admins.positionID', 'preference_positions.id')
                 ->orderBy('users.created_at', 'DESC')
                 ->where('users.name', 'LIKE','%'.$request->get('filter').'%')
-                // ->whereNot('user_roles.roleID', 5)
+                ->whereNot('user_roles.roleID', 5)
                 ->get();
                 return response()->json($preference);
 

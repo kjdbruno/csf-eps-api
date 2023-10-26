@@ -770,6 +770,9 @@ class FeedbackController extends Controller
                 ->where('feedback_responses.feedbackID', $id)
                 ->orderBy('feedback_responses.created_at', 'DESC')
                 ->get();
+
+            $account = User::where('id', auth()->user()->id)
+                ->get();
             
             $today = Carbon::now(+8);
             $now = $today->toDayDateTimeString(); 
@@ -779,6 +782,7 @@ class FeedbackController extends Controller
                 'evidences' => $evidences,
                 'rating' => number_format($rating, 2),
                 'responses' => $responses,
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'portrait');
 

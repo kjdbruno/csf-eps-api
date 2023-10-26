@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Feedback Category Report</title>
+    <title>Feedback Kiosk Report</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
@@ -69,25 +69,30 @@
     <div style="padding: 25px 25px 30px 25px;">
         <div style="text-align: center;">
             <img src="https://www.sanfernandocity.gov.ph/csflu_website/wp-content/uploads/2020/04/San-Fernando-Seal_1-500x500.jpg" width="75" height="75" style="border-bottom: 15px;" />
-            <div class="h4">Feedback Category Report</div>
+            <div class="h4">Feedback Kiosk Per Office Report</div>
             <div class="h5">{{ $date }}</div>
         </div>
         <div style="padding: 25px 0px 0px 0px;">
             <table>
                 <tr>
-                    <th style="width: 50%;"><div style="text-transform: uppercase;">-</div></th>
-                    <th><div style="text-transform: uppercase;">pending</div></th>
-                    <th><div style="text-transform: uppercase;">ongoing</div></th>
-                    <th><div style="text-transform: uppercase;">completed</div></th>
-                    <th><div style="text-transform: uppercase;">total</div></th>
+                    <th rowspan="2" style="width: 30%;"><div style="text-transform: uppercase;">-</div></th>
+                    <th colspan="4"><div style="text-transform: uppercase; text-align: center;">kiosk rating</div></th>
+                </tr>
+                <tr>
+                    <th style="text-align: center; width: 10%;">Physical</th>
+                    <th style="text-align: center; width: 10%;">Services</th>
+                    <th style="text-align: center; width: 10%;">Personnel</th>
+                    <th style="text-align: center; width: 10%;">Overall</th>
                 </tr>
                 @foreach ($data as $dt)
                 <tr>
-                    <td><div style="text-transform: uppercase;">{{ $dt['label'] }}</div></td>
-                    <td style="text-align: center;">{{ $dt['pending'] }}</td>
-                    <td style="text-align: center;">{{ $dt['ongoing'] }}</td>
-                    <td style="text-align: center;">{{ $dt['completed'] }}</td>
-                    <td style="text-align: center;">{{ $dt['total'] }}</td>
+                    <td>
+                        <div style="text-transform: uppercase; font-weight: bold;">{{ $dt['office'] }}</div>
+                    </td>
+                    <td style="text-align: center;">{{ $dt['phyRating'] }}%</td>
+                    <td style="text-align: center;">{{ $dt['serRating'] }}%</td>
+                    <td style="text-align: center;">{{ $dt['perRating'] }}%</td>
+                    <td style="text-align: center;">{{ $dt['ovrRating'] }}%</td>
                 </tr>
                 @endforeach
             </table>

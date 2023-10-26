@@ -147,6 +147,9 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
 
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
             $dtf = Carbon::create($request->get('from').' 08:00:00');
             $dtt = Carbon::create($request->get('to').' 17:00:00');
             $from = $dtf->toDayDateTimeString(); 
@@ -170,6 +173,7 @@ class ReportController extends Controller
                 'totalDiscussion' => $t_discussion,
                 'activeDiscussion' => $a_discussion,
                 'inactiveDiscussion' => $i_discussion,
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'portrait');
 
@@ -362,6 +366,9 @@ class ReportController extends Controller
 
                 }
 
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
             $dtf = Carbon::create($request->get('from').' 08:00:00');
             $dtt = Carbon::create($request->get('to').' 17:00:00');
             $from = $dtf->toDayDateTimeString(); 
@@ -382,6 +389,7 @@ class ReportController extends Controller
                 'kr_ovr' => number_format($kr_ovr, 2),
                 'catArr' => $catArr,
                 'offArr' => $offArr,
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'portrait');
 
@@ -490,6 +498,9 @@ class ReportController extends Controller
             $km_ovr = (3 * $kc_ovr);
             $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
             $dtf = Carbon::create($request->get('from').' 08:00:00');
             $dtt = Carbon::create($request->get('to').' 17:00:00');
             $from = $dtf->toDayDateTimeString(); 
@@ -508,6 +519,7 @@ class ReportController extends Controller
                 'kr_ser' => number_format($kr_ser, 2),
                 'kr_per' => number_format($kr_per, 2),
                 'kr_ovr' => number_format($kr_ovr, 2),
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'portrait');
 
@@ -573,6 +585,9 @@ class ReportController extends Controller
                         array_push($arr, $array);
                 }
 
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
             $dtf = Carbon::create($request->get('from').' 08:00:00');
             $dtt = Carbon::create($request->get('to').' 17:00:00');
             $from = $dtf->toDayDateTimeString(); 
@@ -584,6 +599,7 @@ class ReportController extends Controller
             $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true])->loadView('report.FeedbackCategoryReport', [
                 'date' => $from.' to '.$to,
                 'data' => $arr,
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'portrait');
             return $pdf->stream();
@@ -636,6 +652,9 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
 
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
             $dtf = Carbon::create($request->get('from').' 08:00:00');
             $dtt = Carbon::create($request->get('to').' 17:00:00');
             $from = $dtf->toDayDateTimeString(); 
@@ -649,6 +668,7 @@ class ReportController extends Controller
                 'data' => $levelArr,
                 'cancel' => $cancel,
                 'delay' => $delay,
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'portrait');
 
@@ -787,6 +807,9 @@ class ReportController extends Controller
                     array_push($arr, $array);
                 }
 
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
             $dtf = Carbon::create($request->get('from').' 08:00:00');
             $dtt = Carbon::create($request->get('to').' 17:00:00');
             $from = $dtf->toDayDateTimeString(); 
@@ -798,6 +821,7 @@ class ReportController extends Controller
             $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true])->loadView('report.FeedbackOfficeReport', [
                 'date' => $from.' to '.$to,
                 'data' => $arr,
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'landscape');
 
@@ -898,6 +922,9 @@ class ReportController extends Controller
                     array_push($arr, $array);
                 }
 
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
             $dtf = Carbon::create($request->get('from').' 08:00:00');
             $dtt = Carbon::create($request->get('to').' 17:00:00');
             $from = $dtf->toDayDateTimeString(); 
@@ -909,6 +936,7 @@ class ReportController extends Controller
             $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true])->loadView('report.FeedbackKioskReport', [
                 'date' => $from.' to '.$to,
                 'data' => $arr,
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'landscape');
 
@@ -919,6 +947,113 @@ class ReportController extends Controller
             logger('Message logged from ReportController.getFeedbackKiosk', [$e->getMessage()]);
             return response()->json([
                 'error' => 'Something went wrong getting feedback kiosk report!',
+                'data' => $e->getMessage()
+            ], 400);
+
+        }
+    }
+
+    /**
+     * 
+     */
+    public function getFeedbackKioskOffice(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+
+        try {
+
+            $start = Carbon::create($request->get('from').' 00:00:00');
+            $end = Carbon::create($request->get('to').' 23:59:59');
+
+            $offices = PreferenceOffice::get();
+
+            $arr = [];
+
+            foreach ($offices as $key => $o_value) {
+                
+                $ks_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                    ->where('preference_kiosks.officeID', $o_value->id)
+                    ->whereNot('kiosk_ratings.phyRating', 0)
+                    ->sum('kiosk_ratings.phyRating');
+                $ks_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                    ->where('preference_kiosks.officeID', $o_value->id)
+                    ->whereNot('kiosk_ratings.serRating', 0)
+                    ->sum('kiosk_ratings.serRating');
+                $ks_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                    ->where('preference_kiosks.officeID', $o_value->id)
+                    ->whereNot('kiosk_ratings.perRating', 0)
+                    ->sum('kiosk_ratings.perRating');
+                $ks_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                    ->where('preference_kiosks.officeID', $o_value->id)
+                    ->whereNot('kiosk_ratings.ovrRating', 0)
+                    ->sum('kiosk_ratings.ovrRating');
+
+                $kc_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                    ->where('preference_kiosks.officeID', $o_value->id)
+                    ->whereNot('kiosk_ratings.phyRating', 0)
+                    ->count();
+                $kc_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                    ->where('preference_kiosks.officeID', $o_value->id)
+                    ->whereNot('kiosk_ratings.serRating', 0)
+                    ->count();
+                $kc_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                    ->where('preference_kiosks.officeID', $o_value->id)
+                    ->whereNot('kiosk_ratings.perRating', 0)
+                    ->count();
+                $kc_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
+                    ->where('preference_kiosks.officeID', $o_value->id)
+                    ->whereNot('kiosk_ratings.ovrRating', 0)
+                    ->count();
+
+                $km_phy = (3 * $kc_phy);
+                $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
+
+                $km_ser = (3 * $kc_ser);
+                $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
+
+                $km_per = (3 * $kc_per);
+                $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
+
+                $km_ovr = (3 * $kc_ovr);
+                $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
+
+                $array = [
+                    'office' => $o_value->label,
+                    'phyRating' => number_format($kr_phy, 2),
+                    'serRating' => number_format($kr_ser, 2),
+                    'perRating' => number_format($kr_per, 2),
+                    'ovrRating' => number_format($kr_ovr, 2),
+                ];
+
+                array_push($arr, $array);
+
+            }
+
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
+            $dtf = Carbon::create($request->get('from').' 08:00:00');
+            $dtt = Carbon::create($request->get('to').' 17:00:00');
+            $from = $dtf->toDayDateTimeString(); 
+            $to = $dtt->toDayDateTimeString(); 
+
+            $today = Carbon::now(+8);
+            $now = $today->toDayDateTimeString(); 
+
+            $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true])->loadView('report.FeedbackKioskOfficeReport', [
+                'date' => $from.' to '.$to,
+                'data' => $arr,
+                'name' => $account[0]->name,
+                'now' => $now
+            ])->setPaper('a4', 'landscape');
+
+            return $pdf->stream();
+
+        } catch (\Exception $e) {
+
+            logger('Message logged from ReportController.getFeedbackKioskOffice', [$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong getting feedback kiosk office report!',
                 'data' => $e->getMessage()
             ], 400);
 
@@ -967,6 +1102,9 @@ class ReportController extends Controller
                         array_push($catArr, $array);
                 }
 
+            $account = User::where('id', auth()->user()->id)
+                ->get();
+
             $dtf = Carbon::create($request->get('from').' 08:00:00');
             $dtt = Carbon::create($request->get('to').' 17:00:00');
             $from = $dtf->toDayDateTimeString(); 
@@ -981,6 +1119,7 @@ class ReportController extends Controller
                 'totalActive' => $a_discussion,
                 'totalInactive' => $i_discussion,
                 'data' => $catArr,
+                'name' => $account[0]->name,
                 'now' => $now
             ])->setPaper('a4', 'portrait');
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Feedback Detail</title>
+    <title>Kiosk Report</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
@@ -59,7 +59,6 @@
             left: 0;
             bottom: 0;
             width: 100%;
-            background-color: red;
             background-color: transparent;
             color: black;
             z-index: 999;
@@ -70,70 +69,64 @@
     <div style="padding: 25px 25px 30px 25px;">
         <div style="text-align: center;">
             <img src="https://www.sanfernandocity.gov.ph/csflu_website/wp-content/uploads/2020/04/San-Fernando-Seal_1-500x500.jpg" width="75" height="75" style="border-bottom: 15px;" />
-            <div class="h4">Feedback Detail</div>
+            <div class="h4">Kiosk Report</div>
+            <div class="h4">{{ $office }}</div>
+            <div class="h4">CY {{ $year }}</div>
         </div>
         <div style="padding: 25px 0px 0px 0px;">
             <table>
                 <tr>
-                    <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">complainant</div></td>
-                    <td width="75%"><div style="font-size: .85em; text-transform: capitalize;">{{ $feedbacks[0]->name }}</div></td>
-                </tr>
-                <tr>
-                    <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">email</div></td>
-                    <td width="75%"><div style="font-size: .85em;">{{ $feedbacks[0]->email }}</div></td>
-                </tr>
-                <tr>
-                    <td colspan='2' style='padding-top: 5px; padding-bottom: 5px;'><div style="text-transform: uppercase; text-weight: bold;">feedback details</div></td>
-                </tr>
-                <tr>
-                    <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">status</div></td>
-                    <td width="75%">
-                        <div style="font-size: .85em;">
-                        @if ($feedbacks[0]->status == 1)
-                        PENDING
-                        @endif
-                        @if ($feedbacks[0]->status == 2)
-                        ONGOING
-                        @endif
-                        @if ($feedbacks[0]->status == 3)
-                        COMPLETED
-                        @endif
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">category</div></td>
-                    <td width="75%"><div style="font-size: .85em;">{{ $feedbacks[0]->category }}</div></td>
-                </tr>
-                <tr>
-                    <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">overall rating</div></td>
-                    <td width="75%"><div style="font-size: .85em;">{{ $rating }}%</div></td>
-                </tr>
-                <tr>
-                    <td colspan='2'>
-                        <div style="">
-                        {{ $feedbacks[0]->content }}
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan='2' style='padding-top: 5px; padding-bottom: 5px;'><div style="text-transform: uppercase; text-weight: bold;">feedback responses</div></td>
-                </tr>
-                @foreach ($responses as $dt)
-                <tr>
-                    <td colspan='2'>
+                    <td width="80%">
                         <div style="text-transform: uppercase; text-weight: bold;">
-                        {{ $dt['name'] }}
+                            <div>I. PHYSICAL</div>
+                            <div style='font-size: .65em;'>The work environment is clean and orderly</div>
                         </div>
-                        <div style="text-transform: capitalize; font-size: .85em;">
-                        {{ $dt['office'] }}
-                        </div>
-                        <div style="font-size: .65em;">
-                        {{ $dt['content'] }}
+                    </td>
+                    <td width="20%">
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center;">
+                            <div>{{ $phyRating }} %</div>
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                <tr>
+                    <td width="80%">
+                        <div style="text-transform: uppercase; text-weight: bold;">
+                            <div>II. SERVICES</div>
+                            <div style='font-size: .65em;'>Your concern is addressed promptly and appropriate</div>
+                        </div>
+                    </td>
+                    <td width="20%">
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center;">
+                            <div>{{ $serRating }} %</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80%">
+                        <div style="text-transform: uppercase; text-weight: bold;">
+                            <div>III. PERSONNEL</div>
+                            <div style='font-size: .65em;'>The employee was courteous and accomodating</div>
+                        </div>
+                    </td>
+                    <td width="20%">
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center;">
+                            <div>{{ $perRating }} %</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80%">
+                        <div style="text-transform: uppercase; text-weight: bold; ">
+                            <div>IV. OVERALL RATING</div>
+                            <div style='font-size: .65em;'>How satisfied are you with the quality of service provided</div>
+                        </div>
+                    </td>
+                    <td width="20%">
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center;">
+                            <div>{{ $ovrRating }} %</div>
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
