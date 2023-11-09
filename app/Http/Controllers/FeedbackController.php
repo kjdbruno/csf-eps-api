@@ -52,7 +52,7 @@ class FeedbackController extends Controller
                 ->get();
 
             $now = NOW();
-            $today = date_format($now, 'Y-m-d h:i:s');
+            $today = date_format($now, 'Y-m-d H:i:s');
 
             $feedbacks = Feedback::get();
 
