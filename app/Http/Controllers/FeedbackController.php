@@ -54,20 +54,17 @@ class FeedbackController extends Controller
             $now = NOW();
             $today = date_format($now, 'Y-m-d H:i:s');
 
-            $feedbacks = Feedback::get();
+            $feedbacks = Feedback::where('expire_on', '<', $today)
+                ->get();
 
                 foreach ($feedbacks as $key => $f_value) {
-
-                    if ($today >= $f_value->expire_on) {
-                        
-                        $offices = FeedbackOffice::where('feedbackID', $f_value->id)
-                            ->where('isReceived', FALSE)
-                            ->where('isActive', TRUE)
-                            ->update([
-                                'isDelayed' => TRUE
-                            ]);
-
-                    }
+                    
+                    $offices = FeedbackOffice::where('feedbackID', $f_value->id)
+                        ->where('isReceived', FALSE)
+                        ->where('isActive', TRUE)
+                        ->update([
+                            'isDelayed' => TRUE
+                        ]);
 
                 }
 
@@ -108,7 +105,7 @@ class FeedbackController extends Controller
                         ->count();
 
                         return response()->json([
-                            'totalFeedback' => $today,
+                            'totalFeedback' => $total,
                             'totalPending' => $pending,
                             'totalOngoing' => $ongoing,
                             'totalCompleted' => $completed,
