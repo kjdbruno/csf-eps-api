@@ -108,7 +108,7 @@ class FeedbackController extends Controller
                         ->count();
 
                         return response()->json([
-                            'totalFeedback' => $total,
+                            'totalFeedback' => $today,
                             'totalPending' => $pending,
                             'totalOngoing' => $ongoing,
                             'totalCompleted' => $completed,
