@@ -150,7 +150,7 @@ class PreferenceOfficeSeeder extends Seeder
                 'updated_at' =>NOW()
             ],
             [
-                'label' => 'Office of the City Social Welfare & Development Officers',
+                'label' => 'Office of the City Social Welfare & Development Officer',
                 'code' => 'CSWD',
                 'created_at' => NOW(),
                 'updated_at' =>NOW()
@@ -170,6 +170,18 @@ class PreferenceOfficeSeeder extends Seeder
             [
                 'label' => 'Office of the City Librarian',
                 'code' => 'LIB',
+                'created_at' => NOW(),
+                'updated_at' =>NOW()
+            ],
+            [
+                'label' => 'Gender & Development Office',
+                'code' => 'GAD',
+                'created_at' => NOW(),
+                'updated_at' =>NOW()
+            ],
+            [
+                'label' => 'City Disaster Risk Reduction Management Office',
+                'code' => 'CDRRMO',
                 'created_at' => NOW(),
                 'updated_at' =>NOW()
             ],

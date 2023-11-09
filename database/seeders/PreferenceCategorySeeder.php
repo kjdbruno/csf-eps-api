@@ -153,7 +153,7 @@ class PreferenceCategorySeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'label' => 'Veterinary Service',
+                'label' => 'Veterinary Services',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -163,7 +163,7 @@ class PreferenceCategorySeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'label' => 'Covid-related Conern',
+                'label' => 'Covid-related Concern',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
