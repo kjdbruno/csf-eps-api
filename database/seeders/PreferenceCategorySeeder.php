@@ -171,6 +171,16 @@ class PreferenceCategorySeeder extends Seeder
                 'label' => 'Youth-related Concern',
                 'created_at' => now(),
                 'updated_at' => now()
+            ],
+            [
+                'label' => 'PWD-related Concern',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'label' => 'Employment-related Concern',
+                'created_at' => now(),
+                'updated_at' => now()
             ]
         ]);
     }

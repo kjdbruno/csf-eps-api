@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/getPosition', [\App\Http\Controllers\PreferenceController::class, 'getPosition']); // get position
     Route::get('/getOffice', [\App\Http\Controllers\PreferenceController::class, 'getOffice']); // get office
     Route::get('/getCategory', [\App\Http\Controllers\PreferenceController::class, 'getCategory']); // get category
+    Route::get('/getMessage', [\App\Http\Controllers\PreferenceController::class, 'getMessage']); // get message
     Route::get('/getPersonnel/{id}', [\App\Http\Controllers\PreferenceController::class, 'getPersonnel']); // get personnel
     /**
      * PREFERENCES

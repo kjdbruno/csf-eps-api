@@ -185,6 +185,24 @@ class PreferenceOfficeSeeder extends Seeder
                 'created_at' => NOW(),
                 'updated_at' =>NOW()
             ],
+            [
+                'label' => 'Local Youth Development Office',
+                'code' => 'LYDO',
+                'created_at' => NOW(),
+                'updated_at' =>NOW()
+            ],
+            [
+                'label' => 'Person with Disability Affairs Office',
+                'code' => 'PDAO',
+                'created_at' => NOW(),
+                'updated_at' =>NOW()
+            ],
+            [
+                'label' => 'Public Employment Service Office',
+                'code' => 'PESO',
+                'created_at' => NOW(),
+                'updated_at' =>NOW()
+            ],
         ]);
     }
 }

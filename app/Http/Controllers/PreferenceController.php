@@ -20,6 +20,7 @@ use App\Models\FeedbackRating;
 use App\Models\Discussion;
 use App\Models\KioskRating;
 use App\Models\PreferenceMonth;
+use App\Models\PreferenceMessage;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -727,6 +728,32 @@ class PreferenceController extends Controller
                 'error' => 'Something went wrong getting record',
                 'msg' => $e->getMessage()
             ], $e->getCode());
+        } 
+    }
+
+    /**
+     * Display a isting of the resource
+     */
+    public function getMessage()
+    {
+        date_default_timezone_set('Asia/Manila');
+
+        try {
+
+            return response()->json(
+                PreferenceMessage::select('id AS value', 'content AS label')
+                    ->where('isActive', TRUE)
+                    ->get()
+                );
+
+        } catch (\Exception $e) {
+
+            logger('Message logged from PreferenceController.getMessage', [$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong getting record',
+                'msg' => $e->getMessage()
+            ], $e->getCode());
+
         } 
     }
 
