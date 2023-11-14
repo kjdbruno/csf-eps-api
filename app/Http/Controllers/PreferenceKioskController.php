@@ -348,10 +348,14 @@ class PreferenceKioskController extends Controller
                 ->orderBy('kiosk_ratings.created_at', 'DESC')
                 ->get();
 
+            $employees = PreferenceKiosk::where('officeID', $id)
+                ->get();
+
                 return response()->json([
                     'detail' => $office,
                     'rating' => $arr,
-                    'list' => $list
+                    'list' => $list,
+                    'employees' => $employees
                 ]);
 
         } catch (\Exception $e) {
