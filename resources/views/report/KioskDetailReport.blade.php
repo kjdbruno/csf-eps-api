@@ -73,20 +73,13 @@
         </div>
         <div style="padding: 25px 0px 0px 0px;">
             <table>
-                <tr>
-                    <td colspan="4"><div style="text-transform: uppercase; text-weight: bold;">basic information</div></td>
-                </tr>
                 @foreach($kiosks as $dt)
-                <tr>
-                    <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">personnel</div></td>
-                    <td width="75%"><div style="font-size: .85em; text-transform: capitalize;">{{ $dt['name'] }}</div></td>
-                </tr>
                 <tr><td width="25%"><div style="text-transform: uppercase; text-weight: bold;">office</div></td>
                     <td width="75%"><div style="font-size: .85em; text-transform: capitalize;">{{ $dt['office'] }}</div></td>
                 </tr>
                 <tr>
-                    <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">client's name</div></td>
-                    <td width="75%"><div style="font-size: .85em; text-transform: capitalize;">{{ $dt['complainant'] }}</div></td>
+                    <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">complainant</div></td>
+                    <td width="75%"><div style="font-size: .85em; text-transform: capitalize;">{{ $dt['name'] }}</div></td>
                 </tr>
                 <tr>
                     <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">contact no.</div></td>
@@ -98,7 +91,7 @@
                 </tr>
                 <tr>
                     <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">date</div></td>
-                    <td width="75%"><div style="font-size: .85em;">{{ $list[0]->created_at->format('F d, Y') }}</div></td>
+                    <td width="75%"><div style="font-size: .85em;">{{ $dt->date }}</div></td>
                 </tr>
                 @endforeach
             </table>
@@ -106,125 +99,179 @@
         <div style="padding: 25px 0px 0px 0px;">
             <table>
                 <tr>
-                    <td colspan="4"><div style="text-transform: uppercase; text-weight: bold;">satisfaction rating</div></td>
+                    <td colspan="6"><div style="text-transform: uppercase; text-weight: bold;">satisfaction rating</div></td>
                 </tr>
                 <tr>
-                    <td width="40%"><div style="text-transform: uppercase; text-weight: bold;">-</div></td>
-                    <td width="20%"><div style="text-transform: uppercase; text-weight: bold; text-align: center;">dissatisfied</div></td>
-                    <td width="20%"><div style="text-transform: uppercase; text-weight: bold; text-align: center;">neutral</div></td>
-                    <td width="20%"><div style="text-transform: uppercase; text-weight: bold; text-align: center;">satisfied</div></td>
+                    <td width="25%"><div style="text-transform: uppercase; text-weight: bold;">-</div></td>
+                    <td width="15%"><div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: .80em; ">very satisfied</div></td>
+                    <td width="15%"><div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: .80em; ">satisfied</div></td>
+                    <td width="15%"><div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: .80em; ">neutral</div></td>
+                    <td width="15%"><div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: .80em; ">dissatisfied</div></td>
+                    <td width="15%"><div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: .80em; ">poor</div></td>
                 </tr>
                 <tr>
-                    <td width="40%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold;">
-                            <div>I. PHYSICAL</div>
-                            <div style='font-size: .65em;'>The work environment is clean and orderly</div>
+                            <div style='font-size: .65em;'>office environment/atmosphere</div>
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
-                            @if ($list[0]->phyRating ==1)
+                            @if ($list[0]->phyRating ==5)
                                 &times;
                             @endif
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
-                            @if ($list[0]->phyRating ==2)
+                            @if ($list[0]->phyRating ==4)
                                 &times;
                             @endif
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
                             @if ($list[0]->phyRating ==3)
                                 &times;
                             @endif
                         </div>
                     </td>
+                    <td>
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
+                            @if ($list[0]->phyRating ==2)
+                                &times;
+                            @endif
+                        </div>
+                    </td>
+                    <td>
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
+                            @if ($list[0]->phyRating ==1)
+                                &times;
+                            @endif
+                        </div>
+                    </td>
                 </tr>
                 <tr>
-                    <td width="40%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold;">
-                            <div>II. SERVICES</div>
-                            <div style='font-size: .65em;'>Your concern is addressed promptly and appropriate</div>
+                            <div style='font-size: .65em;'>treatment of employee towards you</div>
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
-                            @if ($list[0]->serRating ==1)
+                            @if ($list[0]->serRating ==5)
                                 &times;
                             @endif
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
-                            @if ($list[0]->serRating ==2)
+                            @if ($list[0]->serRating ==4)
                                 &times;
                             @endif
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
                             @if ($list[0]->serRating ==3)
                                 &times;
                             @endif
                         </div>
                     </td>
+                    <td>
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
+                            @if ($list[0]->serRating ==2)
+                                &times;
+                            @endif
+                        </div>
+                    </td>
+                    <td>
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
+                            @if ($list[0]->serRating ==1)
+                                &times;
+                            @endif
+                        </div>
+                    </td>
                 </tr>
                 <tr>
-                    <td width="40%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold;">
-                            <div>III. PERSONNEL</div>
-                            <div style='font-size: .65em;'>The employee was courteous and accomodating</div>
+                            <div style='font-size: .65em;'>promptness of requests as for the services we provide</div>
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
-                            @if ($list[0]->perRating ==1)
+                            @if ($list[0]->perRating ==5)
                                 &times;
                             @endif
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
-                            @if ($list[0]->perRating ==2)
+                            @if ($list[0]->perRating ==4)
                                 &times;
                             @endif
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
                             @if ($list[0]->perRating ==3)
                                 &times;
                             @endif
                         </div>
                     </td>
-                </tr>
-                <tr>
-                    <td width="40%">
-                        <div style="text-transform: uppercase; text-weight: bold;">
-                            <div>IV. OVERALL RATING</div>
-                            <div style='font-size: .65em;'>How satisfied are you with the quality of service provided</div>
-                        </div>
-                    </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
-                            @if ($list[0]->ovrRating ==1)
+                            @if ($list[0]->perRating ==2)
                                 &times;
                             @endif
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
+                            @if ($list[0]->perRating ==1)
+                                &times;
+                            @endif
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="text-transform: uppercase; text-weight: bold;">
+                            <div style='font-size: .65em;'>overall experience</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
+                            @if ($list[0]->ovrRating ==5)
+                                &times;
+                            @endif
+                        </div>
+                    </td>
+                    <td>
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
+                            @if ($list[0]->ovrRating ==4)
+                                &times;
+                            @endif
+                        </div>
+                    </td>
+                    <td>
+                        <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
+                            @if ($list[0]->ovrRating ==3)
+                                &times;
+                            @endif
+                        </div>
+                    </td>
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
                             @if ($list[0]->ovrRating ==2)
                                 &times;
                             @endif
                         </div>
                     </td>
-                    <td width="20%">
+                    <td>
                         <div style="text-transform: uppercase; text-weight: bold; text-align: center; font-size: 2em;">
-                            @if ($list[0]->ovrRating ==3)
+                            @if ($list[0]->ovrRating ==1)
                                 &times;
                             @endif
                         </div>

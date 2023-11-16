@@ -78,8 +78,7 @@
                 <tr>
                     <td width="80%">
                         <div style="text-transform: uppercase; text-weight: bold;">
-                            <div>I. PHYSICAL</div>
-                            <div style='font-size: .65em;'>The work environment is clean and orderly</div>
+                            <div style='font-size: 1em;'>office environment/atmosphere</div>
                         </div>
                     </td>
                     <td width="20%">
@@ -91,8 +90,7 @@
                 <tr>
                     <td width="80%">
                         <div style="text-transform: uppercase; text-weight: bold;">
-                            <div>II. SERVICES</div>
-                            <div style='font-size: .65em;'>Your concern is addressed promptly and appropriate</div>
+                            <div style='font-size: 1em;'>treatment of employee towards you</div>
                         </div>
                     </td>
                     <td width="20%">
@@ -104,8 +102,7 @@
                 <tr>
                     <td width="80%">
                         <div style="text-transform: uppercase; text-weight: bold;">
-                            <div>III. PERSONNEL</div>
-                            <div style='font-size: .65em;'>The employee was courteous and accomodating</div>
+                            <div style='font-size: 1em;'>promptness of requests as for the services we provide</div>
                         </div>
                     </td>
                     <td width="20%">
@@ -117,8 +114,7 @@
                 <tr>
                     <td width="80%">
                         <div style="text-transform: uppercase; text-weight: bold; ">
-                            <div>IV. OVERALL RATING</div>
-                            <div style='font-size: .65em;'>How satisfied are you with the quality of service provided</div>
+                            <div style='font-size: 1em;'>overall experience</div>
                         </div>
                     </td>
                     <td width="20%">

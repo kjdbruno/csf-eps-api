@@ -42,58 +42,50 @@ class PreferenceKioskController extends Controller
 
                 foreach ($kiosks as $key => $k_value) {
                     
-                    $ks_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $k_value->id)
+                    $ks_phy = KioskRating::where('kiosk_ratings.officeID', $k_value->id)
                         ->whereNot('kiosk_ratings.phyRating', 0)
                         ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                         ->sum('kiosk_ratings.phyRating');
-                    $ks_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $k_value->id)
+                    $ks_ser = KioskRating::where('kiosk_ratings.officeID', $k_value->id)
                         ->whereNot('kiosk_ratings.serRating', 0)
                         ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                         ->sum('kiosk_ratings.serRating');
-                    $ks_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $k_value->id)
+                    $ks_per = KioskRating::where('kiosk_ratings.officeID', $k_value->id)
                         ->whereNot('kiosk_ratings.perRating', 0)
                         ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                         ->sum('kiosk_ratings.perRating');
-                    $ks_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $k_value->id)
+                    $ks_ovr = KioskRating::where('kiosk_ratings.officeID', $k_value->id)
                         ->whereNot('kiosk_ratings.ovrRating', 0)
                         ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                         ->sum('kiosk_ratings.ovrRating');
 
-                    $kc_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $k_value->id)
+                    $kc_phy = KioskRating::where('kiosk_ratings.officeID', $k_value->id)
                         ->whereNot('kiosk_ratings.phyRating', 0)
                         ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                         ->count();
-                    $kc_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $k_value->id)
+                    $kc_ser = KioskRating::where('kiosk_ratings.officeID', $k_value->id)
                         ->whereNot('kiosk_ratings.serRating', 0)
                         ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                         ->count();
-                    $kc_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $k_value->id)
+                    $kc_per = KioskRating::where('kiosk_ratings.officeID', $k_value->id)
                         ->whereNot('kiosk_ratings.perRating', 0)
                         ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                         ->count();
-                    $kc_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $k_value->id)
+                    $kc_ovr = KioskRating::where('kiosk_ratings.officeID', $k_value->id)
                         ->whereNot('kiosk_ratings.ovrRating', 0)
                         ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                         ->count();
 
-                    $km_phy = (3 * $kc_phy);
+                    $km_phy = (5 * $kc_phy);
                     $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-                    $km_ser = (3 * $kc_ser);
+                    $km_ser = (5 * $kc_ser);
                     $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-                    $km_per = (3 * $kc_per);
+                    $km_per = (5 * $kc_per);
                     $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-                    $km_ovr = (3 * $kc_ovr);
+                    $km_ovr = (5 * $kc_ovr);
                     $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
                     $array = [
@@ -276,58 +268,50 @@ class PreferenceKioskController extends Controller
             $office = PreferenceOffice::where('id', $id)
                 ->get();
 
-            $ks_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $ks_phy = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                 ->whereNot('kiosk_ratings.phyRating', 0)
                 ->sum('kiosk_ratings.phyRating');
-            $ks_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $ks_ser = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                 ->whereNot('kiosk_ratings.serRating', 0)
                 ->sum('kiosk_ratings.serRating');
-            $ks_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $ks_per = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                 ->whereNot('kiosk_ratings.perRating', 0)
                 ->sum('kiosk_ratings.perRating');
-            $ks_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $ks_ovr = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                 ->whereNot('kiosk_ratings.ovrRating', 0)
                 ->sum('kiosk_ratings.ovrRating');
 
-            $kc_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $kc_phy = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                 ->whereNot('kiosk_ratings.phyRating', 0)
                 ->count();
-            $kc_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $kc_ser = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                 ->whereNot('kiosk_ratings.serRating', 0)
                 ->count();
-            $kc_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $kc_per = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                 ->whereNot('kiosk_ratings.perRating', 0)
                 ->count();
-            $kc_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $kc_ovr = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                 ->whereNot('kiosk_ratings.ovrRating', 0)
                 ->count();
 
-            $km_phy = (3 * $kc_phy);
+            $km_phy = (5 * $kc_phy);
             $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-            $km_ser = (3 * $kc_ser);
+            $km_ser = (5 * $kc_ser);
             $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-            $km_per = (3 * $kc_per);
+            $km_per = (5 * $kc_per);
             $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-            $km_ovr = (3 * $kc_ovr);
+            $km_ovr = (5 * $kc_ovr);
             $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
             $arr = [];
@@ -341,21 +325,20 @@ class PreferenceKioskController extends Controller
 
             array_push($arr, $rating);
 
-            $list = KioskRating::select('preference_kiosks.*', 'kiosk_ratings.id AS rID', 'kiosk_ratings.phyRating', 'kiosk_ratings.serRating', 'kiosk_ratings.perRating', 'kiosk_ratings.ovrRating')
-                ->join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $list = KioskRating::select('kiosk_ratings.id AS rID', 'kiosk_ratings.phyRating', 'kiosk_ratings.serRating', 'kiosk_ratings.perRating', 'kiosk_ratings.ovrRating')
+                ->where('kiosk_ratings.officeID', $id)
                 ->whereYear('kiosk_ratings.created_at', $users[0]->year)
                 ->orderBy('kiosk_ratings.created_at', 'DESC')
                 ->get();
 
-            $employees = PreferenceKiosk::where('officeID', $id)
-                ->get();
+            // $employees = PreferenceKiosk::where('officeID', $id)
+            //     ->get();
 
                 return response()->json([
                     'detail' => $office,
                     'rating' => $arr,
                     'list' => $list,
-                    'employees' => $employees
+                    // 'employees' => $employees
                 ]);
 
         } catch (\Exception $e) {
@@ -378,10 +361,9 @@ class PreferenceKioskController extends Controller
         
         try {
 
-            $kiosks = PreferenceKiosk::select('preference_kiosks.*', 'preference_offices.label AS office', 'preference_positions.label AS position')
-                ->leftJoin('preference_offices', 'preference_kiosks.officeID', 'preference_offices.id')
-                ->leftJoin('preference_positions', 'preference_kiosks.positionID', 'preference_positions.id')
-                ->where('preference_kiosks.id', $id)
+            $kiosks = KioskRating::select('kiosk_ratings.*', 'preference_offices.label AS office')
+                ->join('preference_offices', 'kiosk_ratings.officeID', 'preference_offices.id')
+                ->where('kiosk_ratings.id', $id)
                 ->get();
 
             $list = KioskRating::where('id', $id)
@@ -426,50 +408,42 @@ class PreferenceKioskController extends Controller
             $office = PreferenceOffice::where('id', $id)
                 ->get();
 
-            $ks_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $ks_phy = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereNot('kiosk_ratings.phyRating', 0)
                 ->sum('kiosk_ratings.phyRating');
-            $ks_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $ks_ser = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereNot('kiosk_ratings.serRating', 0)
                 ->sum('kiosk_ratings.serRating');
-            $ks_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $ks_per = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereNot('kiosk_ratings.perRating', 0)
                 ->sum('kiosk_ratings.perRating');
-            $ks_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $ks_ovr = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereNot('kiosk_ratings.ovrRating', 0)
                 ->sum('kiosk_ratings.ovrRating');
 
-            $kc_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $kc_phy = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereNot('kiosk_ratings.phyRating', 0)
                 ->count();
-            $kc_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $kc_ser = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereNot('kiosk_ratings.serRating', 0)
                 ->count();
-            $kc_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $kc_per = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereNot('kiosk_ratings.perRating', 0)
                 ->count();
-            $kc_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                ->where('preference_kiosks.officeID', $id)
+            $kc_ovr = KioskRating::where('kiosk_ratings.officeID', $id)
                 ->whereNot('kiosk_ratings.ovrRating', 0)
                 ->count();
 
-            $km_phy = (3 * $kc_phy);
+            $km_phy = (5 * $kc_phy);
             $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-            $km_ser = (3 * $kc_ser);
+            $km_ser = (5 * $kc_ser);
             $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-            $km_per = (3 * $kc_per);
+            $km_per = (5 * $kc_per);
             $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-            $km_ovr = (3 * $kc_ovr);
+            $km_ovr = (5 * $kc_ovr);
             $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
             
             $account = User::where('id', auth()->user()->id)

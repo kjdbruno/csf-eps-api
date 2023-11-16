@@ -36,6 +36,9 @@ class ReportController extends Controller
             $start = Carbon::create($request->get('from').' 00:00:00');
             $end = Carbon::create($request->get('to').' 23:59:59');
 
+            $k_start = Carbon::create($request->get('from'));
+            $k_end = Carbon::create($request->get('to'));
+
             $registrant = UserRole::where('roleID', 5)
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
@@ -87,7 +90,7 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
 
-            $om = (3 * $orc);
+            $om = (5 * $orc);
             $ovr = ((($ors == 0 && $orc == 0) ? 0 : ($ors / $om)) * 100);
 
             $frs = FeedbackRating::whereNot('rating', 0)
@@ -97,45 +100,45 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
 
-            $fm = (3 * $frc);
+            $fm = (5 * $frc);
             $fr = ((($frs == 0 && $frc == 0) ? 0 : ($frs / $fm)) * 100);
 
             $ks_phy = KioskRating::whereNot('phyRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('phyRating');
             $ks_ser = KioskRating::whereNot('serRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('serRating');
             $ks_per = KioskRating::whereNot('perRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('perRating');
             $ks_ovr = KioskRating::whereNot('ovrRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('ovrRating');
 
             $kc_phy = KioskRating::whereNot('phyRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
             $kc_ser = KioskRating::whereNot('serRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
             $kc_per = KioskRating::whereNot('perRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
             $kc_ovr = KioskRating::whereNot('ovrRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
 
-            $km_phy = (3 * $kc_phy);
+            $km_phy = (5 * $kc_phy);
             $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-            $km_ser = (3 * $kc_ser);
+            $km_ser = (5 * $kc_ser);
             $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-            $km_per = (3 * $kc_per);
+            $km_per = (5 * $kc_per);
             $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-            $km_ovr = (3 * $kc_ovr);
+            $km_ovr = (5 * $kc_ovr);
             $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
             $t_discussion = Discussion::whereBetween('created_at', [$start, $end])
@@ -202,6 +205,9 @@ class ReportController extends Controller
             $start = Carbon::create($request->get('from').' 00:00:00');
             $end = Carbon::create($request->get('to').' 23:59:59');
 
+            $k_start = Carbon::create($request->get('from'));
+            $k_end = Carbon::create($request->get('to'));
+
             $t_feedback = Feedback::whereBetween('created_at', [$start, $end])
                 ->count();
 
@@ -230,7 +236,7 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
                 
-            $om = (3 * $orc);
+            $om = (5 * $orc);
             $ovr = ((($ors == 0 && $orc == 0) ? 0 : ($ors / $om)) * 100);
 
             $frs = FeedbackRating::whereNot('rating', 0)
@@ -241,45 +247,45 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
 
-            $fm = (3 * $frc);
+            $fm = (5 * $frc);
             $fr = ((($frs == 0 && $frc == 0) ? 0 : ($frs / $fm)) * 100);
 
             $ks_phy = KioskRating::whereNot('phyRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('phyRating');
             $ks_ser = KioskRating::whereNot('serRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('serRating');
             $ks_per = KioskRating::whereNot('perRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('perRating');
             $ks_ovr = KioskRating::whereNot('ovrRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('ovrRating');
 
             $kc_phy = KioskRating::whereNot('phyRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
             $kc_ser = KioskRating::whereNot('serRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
             $kc_per = KioskRating::whereNot('perRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
             $kc_ovr = KioskRating::whereNot('ovrRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
                 
-            $km_phy = (3 * $kc_phy);
+            $km_phy = (5 * $kc_phy);
             $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-            $km_ser = (3 * $kc_ser);
+            $km_ser = (5 * $kc_ser);
             $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-            $km_per = (3 * $kc_per);
+            $km_per = (5 * $kc_per);
             $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-            $km_ovr = (3 * $kc_ovr);
+            $km_ovr = (5 * $kc_ovr);
             $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
             $category = PreferenceCategory::where('isActive', TRUE)
@@ -347,7 +353,7 @@ class ReportController extends Controller
                         ->whereBetween('created_at', [$start, $end])
                         ->count();
 
-                    $oom = (3 * $oorc);
+                    $oom = (5 * $oorc);
                     $oovr = ((($oors == 0 && $oorc == 0) ? 0 : ($oors / $oom)) * 100);
 
                     $delay = FeedbackOffice::where('officeID', $value->id)
@@ -418,6 +424,9 @@ class ReportController extends Controller
             $start = Carbon::create($request->get('from').' 00:00:00');
             $end = Carbon::create($request->get('to').' 23:59:59');
 
+            $k_start = Carbon::create($request->get('from'));
+            $k_end = Carbon::create($request->get('to'));
+
             $t_feedback = Feedback::whereBetween('created_at', [$start, $end])
                 ->count();
 
@@ -446,7 +455,7 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
 
-            $om = (3 * $orc);
+            $om = (5 * $orc);
             $ovr = ((($ors == 0 && $orc == 0) ? 0 : ($ors / $om)) * 100);
 
             $frs = FeedbackRating::whereNot('rating', 0)
@@ -457,45 +466,45 @@ class ReportController extends Controller
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
 
-            $fm = (3 * $frc);
+            $fm = (5 * $frc);
             $fr = ((($frs == 0 && $frc == 0) ? 0 : ($frs / $fm)) * 100);
 
             $ks_phy = KioskRating::whereNot('phyRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('phyRating');
             $ks_ser = KioskRating::whereNot('serRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('serRating');
             $ks_per = KioskRating::whereNot('perRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('perRating');
             $ks_ovr = KioskRating::whereNot('ovrRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->sum('ovrRating');
 
             $kc_phy = KioskRating::whereNot('phyRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
             $kc_ser = KioskRating::whereNot('serRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
             $kc_per = KioskRating::whereNot('perRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
             $kc_ovr = KioskRating::whereNot('ovrRating', 0)
-                ->whereBetween('created_at', [$start, $end])
+                ->whereBetween('date', [$k_start, $k_end])
                 ->count();
 
-            $km_phy = (3 * $kc_phy);
+            $km_phy = (5 * $kc_phy);
             $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-            $km_ser = (3 * $kc_ser);
+            $km_ser = (5 * $kc_ser);
             $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-            $km_per = (3 * $kc_per);
+            $km_per = (5 * $kc_per);
             $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-            $km_ovr = (3 * $kc_ovr);
+            $km_ovr = (5 * $kc_ovr);
             $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
             $account = User::where('id', auth()->user()->id)
@@ -698,6 +707,9 @@ class ReportController extends Controller
             $start = Carbon::create($request->get('from').' 00:00:00');
             $end = Carbon::create($request->get('to').' 23:59:59');
 
+            $k_start = Carbon::create($request->get('from'));
+            $k_end = Carbon::create($request->get('to'));
+
             $office = PreferenceOffice::where('isActive', TRUE)
                 ->get();
 
@@ -719,7 +731,7 @@ class ReportController extends Controller
                         ->whereBetween('created_at', [$start, $end])
                         ->count();
                         
-                    $om = (3 * $orc);
+                    $om = (5 * $orc);
                     $ovr = ((($ors == 0 && $orc == 0) ? 0 : ($ors / $om)) * 100);
                     
                     $frs = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
@@ -736,61 +748,53 @@ class ReportController extends Controller
                         ->whereBetween('feedback_offices.created_at', [$start, $end])
                         ->count();
                         
-                    $fm = (3 * $frc);
+                    $fm = (5 * $frc);
                     $fr = ((($frs == 0 && $frc == 0) ? 0 : ($frs / $fm)) * 100);
                     
-                    $ks_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $value->id)
+                    $ks_phy = KioskRating::where('kiosk_ratings.officeID', $value->id)
                         ->whereNot('kiosk_ratings.phyRating', 0)
-                        ->whereBetween('kiosk_ratings.created_at', [$start, $end])
+                        ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                         ->sum('kiosk_ratings.phyRating');
-                    $ks_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $value->id)
+                    $ks_ser = KioskRating::where('kiosk_ratings.officeID', $value->id)
                         ->whereNot('kiosk_ratings.serRating', 0)
-                        ->whereBetween('kiosk_ratings.created_at', [$start, $end])
+                        ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                         ->sum('kiosk_ratings.serRating');
-                    $ks_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $value->id)
+                    $ks_per = KioskRating::where('kiosk_ratings.officeID', $value->id)
                         ->whereNot('kiosk_ratings.perRating', 0)
-                        ->whereBetween('kiosk_ratings.created_at', [$start, $end])
+                        ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                         ->sum('kiosk_ratings.perRating');
-                    $ks_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $value->id)
+                    $ks_ovr = KioskRating::where('kiosk_ratings.officeID', $value->id)
                         ->whereNot('kiosk_ratings.ovrRating', 0)
-                        ->whereBetween('kiosk_ratings.created_at', [$start, $end])
+                        ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                         ->sum('kiosk_ratings.ovrRating');
                         
-                    $kc_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $value->id)
+                    $kc_phy = KioskRating::where('kiosk_ratings.officeID', $value->id)
                         ->whereNot('kiosk_ratings.phyRating', 0)
-                        ->whereBetween('kiosk_ratings.created_at', [$start, $end])
+                        ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                         ->count();
-                    $kc_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $value->id)
+                    $kc_ser = KioskRating::where('kiosk_ratings.officeID', $value->id)
                         ->whereNot('kiosk_ratings.serRating', 0)
-                        ->whereBetween('kiosk_ratings.created_at', [$start, $end])
+                        ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                         ->count();
-                    $kc_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $value->id)
+                    $kc_per = KioskRating::where('kiosk_ratings.officeID', $value->id)
                         ->whereNot('kiosk_ratings.perRating', 0)
-                        ->whereBetween('kiosk_ratings.created_at', [$start, $end])
+                        ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                         ->count();
-                    $kc_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $value->id)
+                    $kc_ovr = KioskRating::where('kiosk_ratings.officeID', $value->id)
                         ->whereNot('kiosk_ratings.ovrRating', 0)
-                        ->whereBetween('kiosk_ratings.created_at', [$start, $end])
+                        ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                         ->count();
                         
-                    $km_phy = (3 * $kc_phy);
+                    $km_phy = (5 * $kc_phy);
                     $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-                    $km_ser = (3 * $kc_ser);
+                    $km_ser = (5 * $kc_ser);
                     $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-                    $km_per = (3 * $kc_per);
+                    $km_per = (5 * $kc_per);
                     $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-                    $km_ovr = (3 * $kc_ovr);
+                    $km_ovr = (5 * $kc_ovr);
                     $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
                     $array = [
@@ -850,6 +854,9 @@ class ReportController extends Controller
             $start = Carbon::create($request->get('from').' 00:00:00');
             $end = Carbon::create($request->get('to').' 23:59:59');
 
+            $k_start = Carbon::create($request->get('from'));
+            $k_end = Carbon::create($request->get('to'));
+
             $kiosk = PreferenceKiosk::select('preference_kiosks.*', 'preference_offices.code AS office', 'preference_positions.label AS position')
                 ->join('preference_offices', 'preference_kiosks.officeID', 'preference_offices.id')
                 ->join('preference_positions', 'preference_kiosks.positionID', 'preference_positions.id')
@@ -862,51 +869,51 @@ class ReportController extends Controller
 
                     $ks_phy = KioskRating::where('kioskID', $value->id)
                         ->whereNot('phyRating', 0)
-                        ->whereBetween('created_at', [$start, $end])
+                        ->whereBetween('date', [$k_start, $k_end])
                         ->sum('phyRating');
                     $ks_ser = KioskRating::where('kioskID', $value->id)
                         ->whereNot('serRating', 0)
-                        ->whereBetween('created_at', [$start, $end])
+                        ->whereBetween('date', [$k_start, $k_end])
                         ->sum('serRating');
                     $ks_per = KioskRating::where('kioskID', $value->id)
                         ->whereNot('perRating', 0)
-                        ->whereBetween('created_at', [$start, $end])
+                        ->whereBetween('date', [$k_start, $k_end])
                         ->sum('perRating');
                     $ks_ovr = KioskRating::where('kioskID', $value->id)
                         ->whereNot('ovrRating', 0)
-                        ->whereBetween('created_at', [$start, $end])
+                        ->whereBetween('date', [$k_start, $k_end])
                         ->sum('ovrRating');
 
                     $kc_phy = KioskRating::where('kioskID', $value->id)
                         ->whereNot('phyRating', 0)
-                        ->whereBetween('created_at', [$start, $end])
+                        ->whereBetween('date', [$k_start, $k_end])
                         ->count();
                     $kc_ser = KioskRating::where('kioskID', $value->id)
                         ->whereNot('serRating', 0)
-                        ->whereBetween('created_at', [$start, $end])
+                        ->whereBetween('date', [$k_start, $k_end])
                         ->count();
                     $kc_per = KioskRating::where('kioskID', $value->id)
                         ->whereNot('perRating', 0)
-                        ->whereBetween('created_at', [$start, $end])
+                        ->whereBetween('date', [$k_start, $k_end])
                         ->count();
                     $kc_ovr = KioskRating::where('kioskID', $value->id)
                         ->whereNot('ovrRating', 0)
-                        ->whereBetween('created_at', [$start, $end])
+                        ->whereBetween('date', [$k_start, $k_end])
                         ->count();
                     $suggestions = KioskRating::where('kioskID', $value->id)
                         ->whereBetween('created_at', [$start, $end])
                         ->get();
 
-                    $km_phy = (3 * $kc_phy);
+                    $km_phy = (5 * $kc_phy);
                     $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-                    $km_ser = (3 * $kc_ser);
+                    $km_ser = (5 * $kc_ser);
                     $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-                    $km_per = (3 * $kc_per);
+                    $km_per = (5 * $kc_per);
                     $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-                    $km_ovr = (3 * $kc_ovr);
+                    $km_ovr = (5 * $kc_ovr);
                     $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
                     $array = [
@@ -965,56 +972,59 @@ class ReportController extends Controller
             $start = Carbon::create($request->get('from').' 00:00:00');
             $end = Carbon::create($request->get('to').' 23:59:59');
 
+            $k_start = Carbon::create($request->get('from'));
+            $k_end = Carbon::create($request->get('to'));
+
             $offices = PreferenceOffice::get();
 
             $arr = [];
 
             foreach ($offices as $key => $o_value) {
                 
-                $ks_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                    ->where('preference_kiosks.officeID', $o_value->id)
+                $ks_phy = KioskRating::where('kiosk_ratings.officeID', $o_value->id)
                     ->whereNot('kiosk_ratings.phyRating', 0)
+                    ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                     ->sum('kiosk_ratings.phyRating');
-                $ks_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                    ->where('preference_kiosks.officeID', $o_value->id)
+                $ks_ser = KioskRating::where('kiosk_ratings.officeID', $o_value->id)
                     ->whereNot('kiosk_ratings.serRating', 0)
+                    ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                     ->sum('kiosk_ratings.serRating');
-                $ks_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                    ->where('preference_kiosks.officeID', $o_value->id)
+                $ks_per = KioskRating::where('kiosk_ratings.officeID', $o_value->id)
                     ->whereNot('kiosk_ratings.perRating', 0)
+                    ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                     ->sum('kiosk_ratings.perRating');
-                $ks_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                    ->where('preference_kiosks.officeID', $o_value->id)
+                $ks_ovr = KioskRating::where('kiosk_ratings.officeID', $o_value->id)
                     ->whereNot('kiosk_ratings.ovrRating', 0)
+                    ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                     ->sum('kiosk_ratings.ovrRating');
 
-                $kc_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                    ->where('preference_kiosks.officeID', $o_value->id)
+                $kc_phy = KioskRating::where('kiosk_ratings.officeID', $o_value->id)
                     ->whereNot('kiosk_ratings.phyRating', 0)
+                    ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                     ->count();
-                $kc_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                    ->where('preference_kiosks.officeID', $o_value->id)
+                $kc_ser = KioskRating::where('kiosk_ratings.officeID', $o_value->id)
                     ->whereNot('kiosk_ratings.serRating', 0)
+                    ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                     ->count();
-                $kc_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                    ->where('preference_kiosks.officeID', $o_value->id)
+                $kc_per = KioskRating::where('kiosk_ratings.officeID', $o_value->id)
                     ->whereNot('kiosk_ratings.perRating', 0)
+                    ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                     ->count();
-                $kc_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                    ->where('preference_kiosks.officeID', $o_value->id)
+                $kc_ovr = KioskRating::where('kiosk_ratings.officeID', $o_value->id)
                     ->whereNot('kiosk_ratings.ovrRating', 0)
+                    ->whereBetween('kiosk_ratings.date', [$k_start, $k_end])
                     ->count();
 
-                $km_phy = (3 * $kc_phy);
+                $km_phy = (5 * $kc_phy);
                 $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-                $km_ser = (3 * $kc_ser);
+                $km_ser = (5 * $kc_ser);
                 $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-                $km_per = (3 * $kc_per);
+                $km_per = (5 * $kc_per);
                 $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-                $km_ovr = (3 * $kc_ovr);
+                $km_ovr = (5 * $kc_ovr);
                 $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
                 $array = [

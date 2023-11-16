@@ -132,7 +132,7 @@ class FeedbackController extends Controller
                         ->whereYear('feedback.created_at', $users[0]->year)
                         ->count();
 
-                    $maximum = (3 * $rating_count);
+                    $maximum = (5 * $rating_count);
                     $satisfaction = ((($rating_sum == 0 && $rating_count == 0) ? 0 : ($rating_sum / $maximum)) * 100);
 
                     $total = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
@@ -375,7 +375,7 @@ class FeedbackController extends Controller
                 ->where('feedback_responses.feedbackID', $id)
                 ->count();
 
-            $maximum = (3 * $rating_count);
+            $maximum = (5 * $rating_count);
             $rating = ((($rating_sum == 0 && $rating_count == 0) ? 0 : ($rating_sum / $maximum)) * 100);
 
             $arr = [];
@@ -615,7 +615,7 @@ class FeedbackController extends Controller
                     $feedback->userID = $user->id;
                     $feedback->categoryID = $request->get('categoryID');
                     $feedback->content = $request->get('content');
-                    $feedback->expire_on = Carbon::now()->addWeekdays(1);
+                    $feedback->expire_on = date ( 'Y-m-j' , strtotime ( '1 weekdays' ));
                     $feedback->save();
 
                     foreach ($request->get('photos') as $key => $p_value) {
@@ -671,7 +671,7 @@ class FeedbackController extends Controller
                         $feedback->userID = $users[0]->id;
                         $feedback->categoryID = $request->get('categoryID');
                         $feedback->content = $request->get('content');
-                        $feedback->expire_on = Carbon::now()->addWeekdays(1);
+                        $feedback->expire_on = date ( 'Y-m-j' , strtotime ( '1 weekdays' ));
                         $feedback->save();
 
                         foreach ($request->get('photos') as $key => $p_value) {
@@ -751,7 +751,7 @@ class FeedbackController extends Controller
                 ->where('feedback_responses.feedbackID', $id)
                 ->count();
 
-            $maximum = (3 * $rating_count);
+            $maximum = (5 * $rating_count);
             $rating = ((($rating_sum == 0 && $rating_count == 0) ? 0 : ($rating_sum / $maximum)) * 100);
 
             $offices = FeedbackOffice::select('preference_offices.code AS office', 'feedback_offices.isReceived', 'feedback_offices.isDelayed')
@@ -814,12 +814,13 @@ class FeedbackController extends Controller
             $kiosk->name = $request->get('name');
             $kiosk->number = $request->get('number');
             $kiosk->email = $request->get('email');
-            $kiosk->kioskID = $request->get('personnelID');
+            $kiosk->officeID = $request->get('officeID');
             $kiosk->phyRating = $request->get('phyRating');
             $kiosk->serRating = $request->get('serRating');
             $kiosk->perRating = $request->get('perRating');
             $kiosk->ovrRating = $request->get('ovrRating');
             $kiosk->content = $request->get('suggestion');
+            $kiosk->date = $request->get('date');
             $kiosk->save();
             
             $divisor = 0;

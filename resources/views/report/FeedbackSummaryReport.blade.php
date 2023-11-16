@@ -100,29 +100,25 @@
                 </tr>
                 <tr>
                     <td style="width: 70%;">
-                        <div style="text-transform: uppercase; font-size: .85em; font-weight: bold;">physical</div>
-                        <div style="text-transform: uppercase; font-size: .85em;">The work environment is clean & orderly</div>
+                        <div style="text-transform: uppercase; font-size: .85em;">office environment/atmosphere</div>
                     </td>
                     <td style="text-align: center;">{{ $kr_phy }} %</td>
                 </tr>
                 <tr>
                     <td style="width: 70%;">
-                        <div style="text-transform: uppercase; font-size: .85em; font-weight: bold;">services</div>
-                        <div style="text-transform: uppercase; font-size: .85em;">Your concern is addressed promptly & appropriately</div>
+                        <div style="text-transform: uppercase; font-size: .85em;">treatment of employees towards you</div>
                     </td>
                     <td style="text-align: center;">{{ $kr_ser }} %</td>
                 </tr>
                 <tr>
                     <td style="width: 70%;">
-                        <div style="text-transform: uppercase; font-size: .85em; font-weight: bold;">personnel</div>
-                        <div style="text-transform: uppercase; font-size: .85em;">The employee was courteous & accomodating</div>
+                        <div style="text-transform: uppercase; font-size: .85em;">promptness of requests as for the services we provide</div>
                     </td>
                     <td style="text-align: center;">{{ $kr_per }} %</td>
                 </tr>
                 <tr>
                     <td style="width: 70%;">
-                        <div style="text-transform: uppercase; font-size: .85em; font-weight: bold;">overall</div>
-                        <div style="text-transform: uppercase; font-size: .85em;">How satisfied are you with the quality of service?</div>
+                        <div style="text-transform: uppercase; font-size: .85em;">overall experience</div>
                     </td>
                     <td style="text-align: center;">{{ $kr_ovr }} %</td>
                 </tr>

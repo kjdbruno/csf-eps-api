@@ -89,7 +89,8 @@ class FeedbackController extends Controller
             $feedback->userID = $request->get('userID');
             $feedback->categoryID = $request->get('categoryID');
             $feedback->content = $request->get('content');
-            $feedback->expire_on = Carbon::now()->addWeekdays(1);
+            $feedback->expire_on = date ( 'Y-m-j' , strtotime ( '1 weekdays' ));
+            // $feedback->expire_on = Carbon::now()->addWeekdays(1);
             $feedback->save();
 
             foreach ($request->get('photos') as $key => $e_value) {

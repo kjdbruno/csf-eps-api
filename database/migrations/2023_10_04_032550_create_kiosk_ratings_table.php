@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('kiosk_ratings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('kioskID')->index();
+            $table->unsignedBigInteger('officeID')->index();
             $table->integer('phyRating')->index();
             $table->integer('serRating')->index();
             $table->integer('perRating')->index();
@@ -24,10 +24,11 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('number')->nullable();
             $table->string('email')->nullable();
+            $table->date('date')->nullable();
             $table->tinyInteger('isActive')->default(true);
             $table->timestamps();
 
-            $table->foreign('kioskID')->references('id')->on('preference_kiosks');
+            $table->foreign('officeID')->references('id')->on('preference_offices');
         });
     }
 

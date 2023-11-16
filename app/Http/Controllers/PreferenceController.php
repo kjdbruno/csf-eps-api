@@ -59,7 +59,7 @@ class PreferenceController extends Controller
                         ->whereBetween('created_at', [$scr_dt, $ecr_dt])
                         ->count();
 
-                    $com = (3 * $coc);
+                    $com = (5 * $coc);
                     $cor = ((($cos == 0 && $coc == 0) ? 0 : ($cos / $com)) * 100);
 
                     $pos = Rating::whereNot('rating', 0.00)
@@ -70,7 +70,7 @@ class PreferenceController extends Controller
                         ->whereBetween('created_at', [$spr_dt, $epr_dt])
                         ->count();
 
-                    $pom = (3 * $poc);
+                    $pom = (5 * $poc);
                     $por = ((($pos == 0 && $poc == 0) ? 0 : ($pos / $pom)) * 100);
 
                     $or_percent = ($cor - $por);
@@ -83,7 +83,7 @@ class PreferenceController extends Controller
                         ->whereBetween('created_at', [$scr_dt, $ecr_dt])
                         ->count();
                         
-                    $cfm = (3 * $cfc);
+                    $cfm = (5 * $cfc);
                     $cfr = ((($cfs == 0 && $cfc == 0) ? 0 : ($cfs / $cfm)) * 100);
 
                     $pfs = FeedbackRating::whereNot('rating', 0)
@@ -94,7 +94,7 @@ class PreferenceController extends Controller
                         ->whereBetween('created_at', [$spr_dt, $epr_dt])
                         ->count();
                         
-                    $pfm = (3 * $pfc);
+                    $pfm = (5 * $pfc);
                     $pfr = ((($pfs == 0 && $pfc == 0) ? 0 : ($pfs / $pfm)) * 100);
 
                     $fb_percent = ($cfr - $pfr);
@@ -131,16 +131,16 @@ class PreferenceController extends Controller
                         ->whereBetween('created_at', [$scr_dt, $ecr_dt])
                         ->count();
                         
-                    $km_phy = (3 * $kc_phy);
+                    $km_phy = (5 * $kc_phy);
                     $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-                    $km_ser = (3 * $kc_ser);
+                    $km_ser = (5 * $kc_ser);
                     $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-                    $km_per = (3 * $kc_per);
+                    $km_per = (5 * $kc_per);
                     $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-                    $km_ovr = (3 * $kc_ovr);
+                    $km_ovr = (5 * $kc_ovr);
                     $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
                     $registrants = PreferenceMonth::where('isActive', TRUE)
@@ -415,16 +415,16 @@ class PreferenceController extends Controller
                         ->whereBetween('kiosk_ratings.created_at', [$scr_dt, $ecr_dt])
                         ->count();
                         
-                    $km_phy = (3 * $kc_phy);
+                    $km_phy = (5 * $kc_phy);
                     $kr_phy = ((($ks_phy == 0 && $kc_phy == 0) ? 0 : ($ks_phy / $km_phy)) * 100);
 
-                    $km_ser = (3 * $kc_ser);
+                    $km_ser = (5 * $kc_ser);
                     $kr_ser = ((($ks_ser == 0 && $kc_phy == 0) ? 0 : ($ks_ser / $km_ser)) * 100);
 
-                    $km_per = (3 * $kc_per);
+                    $km_per = (5 * $kc_per);
                     $kr_per = ((($ks_per == 0 && $kc_per == 0) ? 0 : ($ks_per / $km_per)) * 100);
 
-                    $km_ovr = (3 * $kc_ovr);
+                    $km_ovr = (5 * $kc_ovr);
                     $kr_ovr = ((($ks_ovr == 0 && $kc_ovr == 0) ? 0 : ($ks_ovr / $km_ovr)) * 100);
 
                     $registrants = PreferenceMonth::where('isActive', TRUE)

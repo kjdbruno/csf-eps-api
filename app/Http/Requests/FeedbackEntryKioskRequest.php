@@ -18,12 +18,12 @@ class FeedbackEntryKioskRequest extends FormRequest
             'number' => 'sometimes',
             'email' => 'sometimes',
             'officeID' => 'required|integer',
-            'personnelID' => 'sometimes',
             'phyRating' => 'required',
             'serRating' => 'required',
             'perRating' => 'required',
             'ovrRating' => 'required',
-            'suggestion' => 'sometimes'
+            'suggestion' => 'sometimes',
+            'date' => 'required'
         ];
     }
 }

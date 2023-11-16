@@ -82,10 +82,10 @@
                     <th colspan="4"><div style="text-transform: uppercase; text-align: center;">kiosk rating</div></th>
                 </tr>
                 <tr>
-                    <th style="text-align: center;">Physical</th>
-                    <th style="text-align: center;">Services</th>
-                    <th style="text-align: center;">Personnel</th>
-                    <th style="text-align: center;">Overall</th>
+                    <th style="text-align: center;">1</th>
+                    <th style="text-align: center;">2</th>
+                    <th style="text-align: center;">3</th>
+                    <th style="text-align: center;">4</th>
                 </tr>
                 @foreach ($data as $dt)
                 <tr>

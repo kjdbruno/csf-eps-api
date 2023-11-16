@@ -115,19 +115,19 @@
                 <td colspan="2" style="width: 70%;"><div style="text-transform: uppercase;">kiosk rating</div></td>
             </tr>
             <tr>
-                <td style="width: 70%;"><div style="text-transform: uppercase; font-size: .85em;">- physical rating</div></td>
+                <td style="width: 70%;"><div style="text-transform: uppercase; font-size: .85em;">- office environment/atmosphere</div></td>
                 <td style="text-align: center;">{{ $kr_phy }} %</td>
             </tr>
             <tr>
-                <td style="width: 70%;"><div style="text-transform: uppercase; font-size: .85em;">- service rating</div></td>
+                <td style="width: 70%;"><div style="text-transform: uppercase; font-size: .85em;">- treatment of employees towards you</div></td>
                 <td style="text-align: center;">{{ $kr_ser }} %</td>
             </tr>
             <tr>
-                <td style="width: 70%;"><div style="text-transform: uppercase; font-size: .85em;">- personnel rating</div></td>
+                <td style="width: 70%;"><div style="text-transform: uppercase; font-size: .85em;">- promptness of request as for the services we provide</div></td>
                 <td style="text-align: center;">{{ $kr_per }} %</td>
             </tr>
             <tr>
-                <td style="width: 70%;"><div style="text-transform: uppercase; font-size: .85em;">- overall rating</div></td>
+                <td style="width: 70%;"><div style="text-transform: uppercase; font-size: .85em;">- overall experience</div></td>
                 <td style="text-align: center;">{{ $kr_ovr }} %</td>
             </tr>
         </table>
