@@ -615,7 +615,7 @@ class FeedbackController extends Controller
                     $feedback->userID = $user->id;
                     $feedback->categoryID = $request->get('categoryID');
                     $feedback->content = $request->get('content');
-                    $feedback->expire_on = date ( 'Y-m-j' , strtotime ( '1 weekdays' ));
+                    $feedback->expire_on = date ( 'Y-m-d H:i:s' , strtotime ( '1 weekdays' ));
                     $feedback->save();
 
                     foreach ($request->get('photos') as $key => $p_value) {
@@ -671,7 +671,7 @@ class FeedbackController extends Controller
                         $feedback->userID = $users[0]->id;
                         $feedback->categoryID = $request->get('categoryID');
                         $feedback->content = $request->get('content');
-                        $feedback->expire_on = date ( 'Y-m-j' , strtotime ( '1 weekdays' ));
+                        $feedback->expire_on = date ( 'Y-m-d H:i:s' , strtotime ( '1 weekdays' ));
                         $feedback->save();
 
                         foreach ($request->get('photos') as $key => $p_value) {

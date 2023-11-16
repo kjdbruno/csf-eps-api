@@ -89,7 +89,7 @@ class FeedbackController extends Controller
             $feedback->userID = $request->get('userID');
             $feedback->categoryID = $request->get('categoryID');
             $feedback->content = $request->get('content');
-            $feedback->expire_on = date ( 'Y-m-j' , strtotime ( '1 weekdays' ));
+            $feedback->expire_on = date ( 'Y-m-d H:i:s' , strtotime ( '1 weekdays' ));
             // $feedback->expire_on = Carbon::now()->addWeekdays(1);
             $feedback->save();
 
