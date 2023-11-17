@@ -156,6 +156,7 @@ class PreferenceAccountController extends Controller
             $user = User::findOrFail($id);
             $user->name = $request->get('name');
             $user->email = $request->get('email');
+            $user->avatar = $request->get('avatar');
             $user->save();
 
             $admin = UserAdmin::where('userID', $id)
@@ -164,7 +165,6 @@ class PreferenceAccountController extends Controller
                     'positionID' => $request->get('positionID'),
                     'yearID' => $request->get('yearID'),
                     'employeeID' => $request->get('employeeID'),
-                    'avatar' => $request->get('avatar')
                 ]);
             
             $role = UserRole::where('userID', $id)
