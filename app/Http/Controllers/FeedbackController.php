@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Mail\FeedbackEntryOfflineUserRegistrationMail;
 use App\Mail\FeedbackOfficeMail;
+use App\Mail\FeedbackResponseMail;
 use Illuminate\Support\Facades\Mail;
 
 use Carbon\Carbon;
@@ -311,6 +312,12 @@ class FeedbackController extends Controller
 
         try {
 
+            $client = Feedback::join('users', 'feedback.userID', 'users.id')
+                ->where('feedback.id', $request->get('feedbackID'))
+                ->get();
+
+            Mail::to($client[0]->email)->send(new FeedbackResponseMail($client[0]->name));
+
             $users = User::select('users.*', 'user_roles.roleID', 'preference_years.label AS year', 'user_admins.officeID')
                 ->join('user_admins', 'users.id', 'user_admins.userID')
                 ->join('user_roles', 'users.id', 'user_roles.userID')
@@ -480,6 +487,12 @@ class FeedbackController extends Controller
         date_default_timezone_set('Asia/Manila');
 
         try {
+
+            $client = Feedback::join('users', 'feedback.userID', 'users.id')
+                ->where('feedback.id', $request->get('feedbackID'))
+                ->get();
+
+            Mail::to($client[0]->email)->send(new FeedbackResponseMail($client[0]->name));
 
             $response = new FeedbackResponse;
             $response->feedbackID = $request->get('feedbackID');

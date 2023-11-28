@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Office Feedback</title>
+    <title>ePS. Feedback Response</title>
 </head>
 <body>
     <div style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
@@ -23,9 +23,8 @@
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                         <tr>
                             <td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
-                                <h3 style="font-size: 24px; font-weight: 400; margin: 2;">Welcome to ePS.</h3>
-                                <h5 style="font-size: 24px; font-weight: 400; margin: 0;">The Community Engagement Platform</h5>
-                                <h5 style="font-size: 24px; font-weight: 400; margin: 0;">City of San Fernando, La Union</h5>
+                                <h3 style="font-size: 24px; font-weight: 400; margin: 0;">Welcome to ePS.</h3>
+                                <h6 style="font-size: 16px; font-weight: 400; margin: 0;">The Community Engagement Platform of the City of San Fernando, La Union</h6>
                             </td>
                         </tr>
                     </table>
@@ -36,32 +35,22 @@
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                         <tr>
                             <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                <p style="margin: 0;">Sir/Madame,</p>
+                                <p style="margin: 0;">Hello {{$name}},</p>
                             </td>
                         </tr>
                         <tr>
                             <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                <p style="margin: 0;">A concern that involves your office has been filed via e-Participation System for your appropriate action.</p>
+                                <p style="margin: 0;">Your feedback has been responded by the office/s concern.</p>
                             </td>
                         </tr>
                         <tr>
                             <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                <p style="margin: 0;">Please acknowledge receipt of the request by replying to the concern within 24 hours.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                <p style="margin: 0;">A color code has been assigned for the time period to take action. Please be guided accordingly.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                <p style="margin: 0;">Thank you for your compliance.</p>
+                                <p style="margin: 0;">To view the response, please login your account to the eParticipation System. You may also rate the response. </p>
                             </td>
                         </tr>
                         <tr>
                             <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                <p style="margin: 0;">Got a question? You can reply to this email or contact us at the City's Facebook Page.</p>
+                                <p style="margin: 0;">Got a question? You can reply to this email or contact as at our Facebook Page.</p>
                             </td>
                         </tr>
                     </table>
