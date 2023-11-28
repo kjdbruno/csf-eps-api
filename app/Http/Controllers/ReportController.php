@@ -343,12 +343,12 @@ class ReportController extends Controller
                         ->whereBetween('created_at', [$start, $end])
                         ->count();
 
-                    $oors = Rating::whereNot('rating', 0)
+                    $oors = Rating::whereNot('rating', '0.00')
                         ->where('officeID', $value->id)
                         ->whereBetween('created_at', [$start, $end])
                         ->sum('rating');
 
-                    $oorc = Rating::whereNot('rating', 0)
+                    $oorc = Rating::whereNot('rating', '0.00')
                         ->where('officeID', $value->id)
                         ->whereBetween('created_at', [$start, $end])
                         ->count();
