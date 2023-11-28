@@ -339,10 +339,6 @@ class ReportController extends Controller
                 
                 foreach ($office as $key => $value) {
 
-                    $total = FeedbackOffice::where('officeID', $value->id)
-                        ->whereBetween('created_at', [$start, $end])
-                        ->count();
-
                     $oors = Rating::whereNot('rating', '0.00')
                         ->where('officeID', $value->id)
                         ->whereBetween('created_at', [$start, $end])
@@ -356,16 +352,9 @@ class ReportController extends Controller
                     $oom = (5 * $oorc);
                     $oovr = ((($oors == 0 && $oorc == 0) ? 0 : ($oors / $oom)) * 100);
 
-                    $delay = FeedbackOffice::where('officeID', $value->id)
-                        ->where('isDelayed', TRUE)
-                        ->whereBetween('created_at', [$start, $end])
-                        ->count();
-
                         $array = [
                             'label' => $value->label,
-                            'total' => $total,
                             'rating' => number_format($oovr, 2),
-                            'delay' => $delay
                         ];
 
                         array_push($offArr, $array);

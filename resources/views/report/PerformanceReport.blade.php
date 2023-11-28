@@ -147,17 +147,13 @@
         <div style="padding: 25px 0px 0px 0px; page-break-before: always;">
             <table>
                 <thead>
-                    <th style="width: 55%;"><div style="text-transform: uppercase;">Per office</div></th>
-                    <th style="width: 15%;"><div style="text-transform: uppercase; text-align: center;">total</div></th>
-                    <th style="width: 15%;"><div style="text-transform: uppercase; text-align: center;">rating</div></th>
-                    <th style="width: 15%;"><div style="text-transform: uppercase; text-align: center;">delayed</div></th>
+                    <th style="width: 70%;"><div style="text-transform: uppercase;">Per office</div></th>
+                    <th style="width: 30%;"><div style="text-transform: uppercase; text-align: center;">overall rating</div></th>
                 </thead>
                 @foreach ($offArr as $off)
                 <tr>
                     <td><div style="text-transform: uppercase;">{{ $off['label'] }}</div></td>
-                    <td style="text-align: center;">{{ $off['total'] }}</td>
                     <td style="text-align: center;">{{ $off['rating'] }}&nbsp;%</td>
-                    <td style="text-align: center;">{{ $off['delay'] }}</td>
                 </tr>
                 @endforeach
             </table>
