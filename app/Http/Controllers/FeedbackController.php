@@ -240,7 +240,8 @@ class FeedbackController extends Controller
                                     'isActive' => $f_value->isActive,
                                     'status' => $f_value->status,
                                     'rCount' => $receive,
-                                    'offices' => $offices
+                                    'offices' => $offices,
+                                    'expire_on' => $f_value->expire_on
                                 ];
 
                                 array_push($arr, $array);
@@ -282,7 +283,8 @@ class FeedbackController extends Controller
                                     'isActive' => $f_value->isActive,
                                     'status' => $f_value->status,
                                     'rCount' => $receive,
-                                    'offices' => $offices
+                                    'offices' => $offices,
+                                    'expire_on' => $f_value->expire_on
                                 ];
 
                                 array_push($arr, $array);
