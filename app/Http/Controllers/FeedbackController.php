@@ -889,12 +889,13 @@ class FeedbackController extends Controller
             $kiosk->name = $request->get('name');
             $kiosk->number = $request->get('number');
             $kiosk->email = $request->get('email');
-            $kiosk->kioskID = $request->get('personnelID');
+            $kiosk->officeID = $request->get('officeID');
             $kiosk->phyRating = $request->get('phyRating');
             $kiosk->serRating = $request->get('serRating');
             $kiosk->perRating = $request->get('perRating');
             $kiosk->ovrRating = $request->get('ovrRating');
             $kiosk->content = $request->get('suggestion');
+            $kiosk->date = date ( 'Y-m-d H:i:s');
             $kiosk->save();
             
             $divisor = 0;
@@ -921,10 +922,11 @@ class FeedbackController extends Controller
             $rating->rating = $rate;
             $rating->save();
 
-            return response()->json([
-                'msg' => 'RATING SAVED',
-                'data' => $kiosk
-            ], 200);
+            // return response()->json([
+            //     'msg' => 'RATING SAVED',
+            //     'data' => $kiosk
+            // ], 200);
+            return $request;
 
         } catch (\Exception $e) {
 
