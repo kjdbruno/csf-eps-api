@@ -240,8 +240,7 @@ class FeedbackController extends Controller
                                     'isActive' => $f_value->isActive,
                                     'status' => $f_value->status,
                                     'rCount' => $receive,
-                                    'offices' => $offices,
-                                    'expire_on' => date_format($f_value->expire_on, 'Y-m-d H:i:s')
+                                    'offices' => $offices
                                 ];
 
                                 array_push($arr, $array);
