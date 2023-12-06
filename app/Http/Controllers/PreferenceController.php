@@ -466,8 +466,8 @@ class PreferenceController extends Controller
 
                         foreach ($month as $key => $value) {
 
-                            $count = Feedback::join('setting_office_categories', 'feedback.categoryID', 'setting_office_categories.categoryID')
-                                ->where('setting_office_categories.officeID', $users[0]->officeID)
+                            $count = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                                ->where('feedback_offices.officeID', $users[0]->officeID)
                                 ->whereMonth('feedback.created_at', $value->code)
                                 ->whereYear('feedback.created_at', $users[0]->year)
                                 ->count();
@@ -488,23 +488,23 @@ class PreferenceController extends Controller
 
                         foreach ($office as $key => $value) {
 
-                            $pending = Feedback::join('setting_office_categories', 'feedback.categoryID', 'setting_office_categories.categoryID')
-                                ->where('setting_office_categories.officeID', $users[0]->officeID)
-                                ->where('setting_office_categories.officeID', $value->id)
+                            $pending = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                                ->where('feedback_offices.officeID', $users[0]->officeID)
+                                ->where('feedback_offices.officeID', $value->id)
                                 ->where('feedback.status', 1)
                                 ->whereYear('feedback.created_at', $users[0]->year)
                                 ->count();
 
-                            $ongoing = Feedback::join('setting_office_categories', 'feedback.categoryID', 'setting_office_categories.categoryID')
-                                ->where('setting_office_categories.officeID', $users[0]->officeID)
-                                ->where('setting_office_categories.officeID', $value->id)
+                            $ongoing = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                                ->where('feedback_offices.officeID', $users[0]->officeID)
+                                ->where('feedback_offices.officeID', $value->id)
                                 ->where('feedback.status', 2)
                                 ->whereYear('feedback.created_at', $users[0]->year)
                                 ->count();
 
-                            $completed = Feedback::join('setting_office_categories', 'feedback.categoryID', 'setting_office_categories.categoryID')
-                                ->where('setting_office_categories.officeID', $users[0]->officeID)
-                                ->where('setting_office_categories.officeID', $value->id)
+                            $completed = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                                ->where('feedback_offices.officeID', $users[0]->officeID)
+                                ->where('feedback_offices.officeID', $value->id)
                                 ->where('feedback.status', 3)
                                 ->whereYear('feedback.created_at', $users[0]->year)
                                 ->count();
@@ -529,7 +529,9 @@ class PreferenceController extends Controller
                             $d_from = $date->format('Y-m-d 00:00:00');
                             $d_to = $date->format('Y-m-d 23:59:59');
 
-                            $count = Feedback::whereBetween('created_at', [$d_from, $d_to])
+                            $count = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                                ->where('feedback_offices.officeID', $users[0]->officeID)
+                                ->whereBetween('feedback.created_at', [$d_from, $d_to])
                                 ->count();
 
                                 $array = [
@@ -544,8 +546,8 @@ class PreferenceController extends Controller
                         ->whereYear('created_at', $users[0]->year)
                         ->count();
 
-                    $feedback = Feedback::join('setting_office_categories', 'feedback.categoryID', 'setting_office_categories.categoryID')
-                        ->where('setting_office_categories.officeID', $users[0]->officeID)
+                    $feedback = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
+                        ->where('feedback_offices.officeID', $users[0]->officeID)
                         ->whereYear('feedback.created_at', $users[0]->year)
                         ->count();
 
