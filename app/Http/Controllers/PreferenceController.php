@@ -552,8 +552,8 @@ class PreferenceController extends Controller
                         ->whereYear('created_at', $users[0]->year)
                         ->count();
 
-                    $feedback = Feedback::join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
-                        ->where('feedback_offices.officeID', $users[0]->officeID)
+                    $feedback = Feedback::join('setting_office_categories', 'feedback.categoryID', 'setting_office_categories.categoryID')
+                        ->where('setting_office_categories.officeID', $users[0]->officeID)
                         ->whereYear('feedback.created_at', $users[0]->year)
                         ->count();
 
