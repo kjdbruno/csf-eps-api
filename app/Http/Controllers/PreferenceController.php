@@ -367,50 +367,42 @@ class PreferenceController extends Controller
                     
                     $fb_percent = ($cfr - $pfr);
 
-                    $ks_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $users[0]->officeID)
+                    $ks_phy = KioskRating::where('kiosk_ratings.officeID', $users[0]->officeID)
                         ->whereNot('kiosk_ratings.phyRating', 0)
                         ->whereBetween('kiosk_ratings.created_at', [$scr_dt, $ecr_dt])
                         ->sum('kiosk_ratings.phyRating');
 
-                    $ks_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $users[0]->officeID)
+                    $ks_ser = KioskRating::where('kiosk_ratings.officeID', $users[0]->officeID)
                         ->whereNot('kiosk_ratings.serRating', 0)
                         ->whereBetween('kiosk_ratings.created_at', [$scr_dt, $ecr_dt])
                         ->sum('kiosk_ratings.serRating');
 
-                    $ks_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $users[0]->officeID)
+                    $ks_per = KioskRating::where('kiosk_ratings.officeID', $users[0]->officeID)
                         ->whereNot('kiosk_ratings.perRating', 0)
                         ->whereBetween('kiosk_ratings.created_at', [$scr_dt, $ecr_dt])
                         ->sum('kiosk_ratings.perRating');
 
-                    $ks_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $users[0]->officeID)
+                    $ks_ovr = KioskRating::where('kiosk_ratings.officeID', $users[0]->officeID)
                         ->whereNot('kiosk_ratings.ovrRating', 0)
                         ->whereBetween('kiosk_ratings.created_at', [$scr_dt, $ecr_dt])
                         ->sum('kiosk_ratings.ovrRating');
                         
-                    $kc_phy = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $users[0]->officeID)
+                    $kc_phy = KioskRating::where('kiosk_ratings.officeID', $users[0]->officeID)
                         ->whereNot('kiosk_ratings.phyRating', 0)
                         ->whereBetween('kiosk_ratings.created_at', [$scr_dt, $ecr_dt])
                         ->count();
                         
-                    $kc_ser = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $users[0]->officeID)
+                    $kc_ser = KioskRating::where('kiosk_ratings.officeID', $users[0]->officeID)
                         ->whereNot('kiosk_ratings.serRating', 0)
                         ->whereBetween('kiosk_ratings.created_at', [$scr_dt, $ecr_dt])
                         ->count();
 
-                    $kc_per = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $users[0]->officeID)
+                    $kc_per = KioskRating::where('kiosk_ratings.officeID', $users[0]->officeID)
                         ->whereNot('kiosk_ratings.perRating', 0)
                         ->whereBetween('kiosk_ratings.created_at', [$scr_dt, $ecr_dt])
                         ->count();
 
-                    $kc_ovr = KioskRating::join('preference_kiosks', 'kiosk_ratings.kioskID', 'preference_kiosks.id')
-                        ->where('preference_kiosks.officeID', $users[0]->officeID)
+                    $kc_ovr = KioskRating::where('kiosk_ratings.officeID', $users[0]->officeID)
                         ->whereNot('kiosk_ratings.ovrRating', 0)
                         ->whereBetween('kiosk_ratings.created_at', [$scr_dt, $ecr_dt])
                         ->count();
