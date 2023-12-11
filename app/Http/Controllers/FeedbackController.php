@@ -266,6 +266,7 @@ class FeedbackController extends Controller
                         foreach ($feedbacks as $key => $f_value) {
                             
                             $receive = FeedbackOffice::where('feedbackID', $f_value->id)
+                                ->where('officeID', $users[0]->officeID)
                                 ->where('isReceived', TRUE)
                                 ->count();
 
