@@ -83,15 +83,15 @@ class ReportController extends Controller
 
             }
 
-            $ors = Rating::whereNot('rating', 0)
+            $ors = Rating::whereNot('rating', '0.00')
                 ->whereBetween('created_at', [$start, $end])
                 ->sum('rating');
-            $orc = Rating::whereNot('rating', 0)
+            $orc = Rating::whereNot('rating', '0.00')
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
 
             $om = (5 * $orc);
-            $ovr = ((($ors == 0 && $orc == 0) ? 0 : ($ors / $om)) * 100);
+            $ovr = ((($ors == '0.00' && $orc == '0.00') ? 0 : ($ors / $om)) * 100);
 
             $frs = FeedbackRating::whereNot('rating', 0)
                 ->whereBetween('created_at', [$start, $end])
@@ -228,16 +228,16 @@ class ReportController extends Controller
 
             }
 
-            $ors = Rating::whereNot('rating', 0)
+            $ors = Rating::whereNot('rating', '0.00')
                 ->whereBetween('created_at', [$start, $end])
                 ->sum('rating');
                 
-            $orc = Rating::whereNot('rating', 0)
+            $orc = Rating::whereNot('rating', '0.00')
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
                 
             $om = (5 * $orc);
-            $ovr = ((($ors == 0 && $orc == 0) ? 0 : ($ors / $om)) * 100);
+            $ovr = ((($ors == '0.00' && $orc == '0.00') ? 0 : ($ors / $om)) * 100);
 
             $frs = FeedbackRating::whereNot('rating', 0)
                 ->whereBetween('created_at', [$start, $end])
@@ -436,16 +436,16 @@ class ReportController extends Controller
 
             }
 
-            $ors = Rating::whereNot('rating', 0)
+            $ors = Rating::whereNot('rating', '0.00')
                 ->whereBetween('created_at', [$start, $end])
                 ->sum('rating');
 
-            $orc = Rating::whereNot('rating', 0)
+            $orc = Rating::whereNot('rating', '0.00')
                 ->whereBetween('created_at', [$start, $end])
                 ->count();
 
             $om = (5 * $orc);
-            $ovr = ((($ors == 0 && $orc == 0) ? 0 : ($ors / $om)) * 100);
+            $ovr = ((($ors == '0.00' && $orc == '0.00') ? 0 : ($ors / $om)) * 100);
 
             $frs = FeedbackRating::whereNot('rating', 0)
                 ->whereBetween('created_at', [$start, $end])
@@ -710,18 +710,18 @@ class ReportController extends Controller
                         ->whereBetween('created_at', [$start, $end])
                         ->count();
                         
-                    $ors = Rating::whereNot('rating', 0)
+                    $ors = Rating::whereNot('rating', '0.00')
                         ->where('officeID', $value->id)
                         ->whereBetween('created_at', [$start, $end])
                         ->sum('rating');
                         
-                    $orc = Rating::whereNot('rating', 0)
+                    $orc = Rating::whereNot('rating', '0.00')
                         ->where('officeID', $value->id)
                         ->whereBetween('created_at', [$start, $end])
                         ->count();
                         
                     $om = (5 * $orc);
-                    $ovr = ((($ors == 0 && $orc == 0) ? 0 : ($ors / $om)) * 100);
+                    $ovr = ((($ors == '0.00' && $orc == '0.00') ? 0 : ($ors / $om)) * 100);
                     
                     $frs = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
                         ->join('feedback_offices', 'feedback_responses.feedbackID', 'feedback_offices.feedbackID')
