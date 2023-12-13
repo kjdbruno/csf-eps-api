@@ -68,7 +68,9 @@
 <body>
     <div style="padding: 25px 25px 30px 25px;">
         <div style="text-align: center;">
-            <img src="https://lh3.googleusercontent.com/drive-viewer/AK7aPaBeHvFOSlOFglyH3lzw4iOQSnk_nB-nIjbl3idZzRgzDAT1HIZwvkzNSVQkrvy8V-nuND4XC_Ka6zTQlJhvqdaCGdzYFQ=s1600" width="75" height="75" style="border-bottom: 15px;" />
+            <!-- <img src="https://lh3.googleusercontent.com/drive-viewer/AK7aPaBeHvFOSlOFglyH3lzw4iOQSnk_nB-nIjbl3idZzRgzDAT1HIZwvkzNSVQkrvy8V-nuND4XC_Ka6zTQlJhvqdaCGdzYFQ=s1600" width="75" height="75" style="border-bottom: 15px;" /> -->
+            <div class="h3">City of San Fernando</div>
+            <div class="h3">Province of La Union</div>
             <div class="h4">Perfomance Report</div>
             <div class="h5">{{ $date }}</div>
         </div>
