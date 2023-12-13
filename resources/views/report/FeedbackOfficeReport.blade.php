@@ -68,7 +68,7 @@
 <body>
     <div style="padding: 25px 25px 30px 25px;">
         <div style="text-align: center;">
-            <img src="https://www.sanfernandocity.gov.ph/csflu_website/wp-content/uploads/2020/04/San-Fernando-Seal_1-500x500.jpg" width="75" height="75" style="border-bottom: 15px;" />
+            <img src="https://lh3.googleusercontent.com/drive-viewer/AK7aPaBeHvFOSlOFglyH3lzw4iOQSnk_nB-nIjbl3idZzRgzDAT1HIZwvkzNSVQkrvy8V-nuND4XC_Ka6zTQlJhvqdaCGdzYFQ=s1600" width="75" height="75" style="border-bottom: 15px;" />
             <div class="h4">Feedback Office Report</div>
             <div class="h5">{{ $date }}</div>
         </div>
