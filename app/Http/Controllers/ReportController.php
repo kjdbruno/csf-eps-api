@@ -726,16 +726,19 @@ class ReportController extends Controller
                     $ovr = ((($ors == '0.00' && $orc == '0.00') ? 0 : ($ors / $om)) * 100);
                     
                     $frs = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
-                        ->join('feedback_offices', 'feedback_responses.feedbackID', 'feedback_offices.feedbackID')
+                        ->join('feedback', 'feedback_responses.feedbackID', 'feedback.id')
+                        ->join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
                         ->where('feedback_offices.officeID', $value->id)
                         ->whereNot('feedback_ratings.rating', 0)
-                        ->whereBetween('feedback_offices.created_at', [$start, $end])
+                        ->whereBetween('feedback.created_at', [$start, $end])
                         ->sum('feedback_ratings.rating');
                         
                     $frc = FeedbackRating::join('feedback_responses', 'feedback_ratings.responseID', 'feedback_responses.id')
-                        ->join('feedback_offices', 'feedback_responses.feedbackID', 'feedback_offices.feedbackID')
+                        ->join('feedback', 'feedback_responses.feedbackID', 'feedback.id')
+                        ->join('feedback_offices', 'feedback.id', 'feedback_offices.feedbackID')
                         ->where('feedback_offices.officeID', $value->id)
                         ->whereNot('feedback_ratings.rating', 0)
+                        ->whereBetween('feedback.created_at', [$start, $end])
                         ->whereBetween('feedback_offices.created_at', [$start, $end])
                         ->count();
                         
