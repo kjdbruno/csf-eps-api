@@ -39,8 +39,10 @@ class ReportController extends Controller
             $k_start = Carbon::create($request->get('from'));
             $k_end = Carbon::create($request->get('to'));
 
-            $registrant = UserRole::where('roleID', 5)
-                ->whereBetween('created_at', [$start, $end])
+            $registrant = UserClient::join('user_roles', 'user_clients.userID', 'user_roles.userID')
+                ->where('user_roles.roleID', 5)
+                ->where('user_clients.isVerified', TRUE)
+                ->whereBetween('user_roles.created_at', [$start, $end])
                 ->count();
 
             $demographics = PreferenceSex::where('isActive', TRUE)
